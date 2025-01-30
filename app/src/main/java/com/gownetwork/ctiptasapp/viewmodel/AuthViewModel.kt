@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.gownetwork.ctiptasapp.network.ApiClient
 import com.gownetwork.ctiptasapp.network.LoginRequest
 import com.gownetwork.ctiptasapp.network.RegisterRequest
+import com.gownetwork.ctiptasapp.network.Response
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -46,8 +47,15 @@ class AuthViewModel(private val context: Context) : ViewModel() {
                 } else {
                     _loginMessage.postValue(response.Message)
                 }
+            }catch (e: retrofit2.HttpException) {
+                // 🔹 Capturar errores HTTP como 500, 404, etc.
+                val errorBody = e.response()?.errorBody()?.string()
+                val gson = com.google.gson.Gson()
+                val errorResponse = gson.fromJson(errorBody, Response::class.java)
+                _loginMessage.postValue(errorResponse.Message)
             } catch (e: Exception) {
-                _loginMessage.postValue("Error de conexión: ${e.message}")
+                // 🔹 Capturar errores de conexión, tiempo de espera, SSL, etc.
+                _loginMessage.postValue("Error de conexión o servidor: ${e.message}")
             }
 
             _isLoading.postValue(false) // Oculta el loader

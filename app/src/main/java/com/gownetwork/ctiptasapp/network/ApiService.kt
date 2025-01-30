@@ -7,30 +7,47 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import java.security.SecureRandom
+import java.security.cert.X509Certificate
+import javax.net.ssl.*
 
-// Base URL del API
 private const val BASE_URL = "https://gownetwork.icu:444/api/Movil/"
 
-// Configuración de Logging
-val loggingInterceptor = HttpLoggingInterceptor().apply {
-    level = HttpLoggingInterceptor.Level.BODY
+// 🔹 Configurar un TrustManager que acepte todos los certificados (Solo para pruebas)
+private fun getUnsafeOkHttpClient(): OkHttpClient {
+    return try {
+        val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+            override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
+            override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
+            override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+        })
+
+        val sslContext = SSLContext.getInstance("TLS")
+        sslContext.init(null, trustAllCerts, SecureRandom())
+
+        val sslSocketFactory = sslContext.socketFactory
+
+        OkHttpClient.Builder()
+            .sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
+            .hostnameVerifier { _, _ -> true } // 🔹 Acepta cualquier host sin verificar
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
+            .build()
+    } catch (e: Exception) {
+        throw RuntimeException(e)
+    }
 }
 
-val client = OkHttpClient.Builder()
-    .addInterceptor(loggingInterceptor)
-    .build()
-
-// Configuración de Retrofit
+// 🔹 Usar Retrofit con la configuración de seguridad modificada
 val retrofit: Retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .addConverterFactory(GsonConverterFactory.create())
-    .client(client)
+    .client(getUnsafeOkHttpClient()) // 🔹 Se usa la versión insegura de OkHttpClient
     .build()
 
 // Modelos de datos
 data class LoginRequest(val Correo: String, val Password: String)
-
-
 
 data class LoginResult(
     val token: String,

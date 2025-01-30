@@ -1,14 +1,15 @@
 package com.gownetwork.ctiptasapp.CriptasApp
 
-import MainActivity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
 import androidx.lifecycle.ViewModelProvider
 import com.gownetwork.ctiptasapp.databinding.ActivityCriptasLoginBinding
 import com.gownetwork.ctiptasapp.viewmodel.AuthViewModel
+import com.gownetwork.ctiptasapp.viewmodel.AuthViewModelFactory
 
 class CriptasLoginActivity : AppCompatActivity() {
 
@@ -20,7 +21,7 @@ class CriptasLoginActivity : AppCompatActivity() {
         binding = ActivityCriptasLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        authViewModel = ViewModelProvider(this)[AuthViewModel::class.java]
+        authViewModel = ViewModelProvider(this, AuthViewModelFactory(applicationContext))[AuthViewModel::class.java]
 
         // Observa el estado del login
         authViewModel.loginSuccess.observe(this) { success ->
@@ -32,10 +33,10 @@ class CriptasLoginActivity : AppCompatActivity() {
         authViewModel.isLoading.observe(this) { isLoading ->
             if (isLoading) {
                 binding.progressIndicator.visibility = View.VISIBLE
-                binding.btnLogin.isEnabled = false
+                binding.btnLogin.visibility = View.GONE
             } else {
                 binding.progressIndicator.visibility = View.GONE
-                binding.btnLogin.isEnabled = true
+                binding.btnLogin.visibility = View.VISIBLE
             }
         }
 
