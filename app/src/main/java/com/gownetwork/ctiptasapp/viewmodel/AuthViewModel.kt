@@ -33,6 +33,36 @@ class AuthViewModel(private val context: Context) : ViewModel() {
     private val _registerMessage = MutableLiveData<String>()
     val registerMessage: LiveData<String> get() = _registerMessage
 
+    fun register(
+        nombres: String,
+        apellidos: String,
+        direccion: String,
+        telefono: String,
+        contra: String,
+        email: String,
+        fechaNac: String,
+        sexo: String
+    ) {
+        viewModelScope.launch {
+            _isLoading.postValue(true)  // Muestra el loader
+            delay(2000) // Simula tiempo de carga
+
+            try {
+                val response = ApiClient.service.register(
+                    RegisterRequest(nombres, apellidos, direccion, telefono, contra, email, fechaNac, sexo)
+                )
+                if (!response.HasError) {
+                    _registerSuccess.postValue(true)
+                } else {
+                    _registerMessage.postValue(response.Message)
+                }
+            } catch (e: Exception) {
+                _registerMessage.postValue("Error de conexión: ${e.message}")
+            }
+
+            _isLoading.postValue(false) // Oculta el loader
+        }
+    }
 
     fun login(correo: String, password: String) {
         viewModelScope.launch {
