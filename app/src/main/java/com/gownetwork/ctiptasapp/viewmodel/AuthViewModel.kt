@@ -31,7 +31,7 @@ class AuthViewModel(private val context: Context) : ViewModel() {
 
     private val _registerMessage = MutableLiveData<String>()
     val registerMessage: LiveData<String> get() = _registerMessage
-    
+
 
     fun login(correo: String, password: String) {
         viewModelScope.launch {
