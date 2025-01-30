@@ -7,7 +7,7 @@ import com.gownetwork.ctiptasapp.R
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_criptas_login2)
+        setContentView(R.layout.activity_criptas_login)
 
         // Obtener el LinearLayout
         val layout = findViewById<LinearLayout>(R.id.LoginActivity)
