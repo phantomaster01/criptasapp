@@ -16,6 +16,11 @@ retrofit = "2.9.0"
 okhttp = "4.10.0"
 gson = "2.10.1"
 coroutines = "1.7.3"
+navigationVersion = "2.7.5"
+maps = "18.1.0"
+location = "21.0.1"
+volley = "1.2.1"
+mapsVersion = "3.1.0-beta"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,8 +40,13 @@ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhtt
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationVersion" }
+androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationVersion" }
+services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "maps" }
+services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "location" }
+volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+maps = { group = "com.google.android.libraries.maps", name = "maps", version.ref = "mapsVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-

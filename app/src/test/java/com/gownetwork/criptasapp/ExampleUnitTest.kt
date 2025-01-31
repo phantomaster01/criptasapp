@@ -1,4 +1,4 @@
-package com.gownetwork.ctiptasapp
+package com.gownetwork.criptasapp
 
 import org.junit.Test
 

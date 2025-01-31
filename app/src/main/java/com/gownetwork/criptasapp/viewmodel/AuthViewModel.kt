@@ -1,4 +1,4 @@
-package com.gownetwork.ctiptasapp.viewmodel
+package com.gownetwork.criptasapp.viewmodel
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -6,12 +6,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gownetwork.ctiptasapp.network.ApiClient
-import com.gownetwork.ctiptasapp.network.LoginRequest
-import com.gownetwork.ctiptasapp.network.RegisterRequest
-import com.gownetwork.ctiptasapp.network.Response
+import com.gownetwork.criptasapp.network.ApiClient
+import com.gownetwork.criptasapp.network.LoginRequest
+import com.gownetwork.criptasapp.network.RegisterRequest
+import com.gownetwork.criptasapp.network.Response
+import com.gownetwork.criptasapp.network.entities.UserProfileResponse
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
 class AuthViewModel(private val context: Context) : ViewModel() {
 
@@ -32,6 +34,41 @@ class AuthViewModel(private val context: Context) : ViewModel() {
 
     private val _registerMessage = MutableLiveData<String>()
     val registerMessage: LiveData<String> get() = _registerMessage
+
+    private val _userProfile = MutableLiveData<UserProfileResponse>()
+    val userProfile: LiveData<UserProfileResponse> get() = _userProfile
+
+    private val _profileError = MutableLiveData<String>()
+    val profileError: LiveData<String> get() = _profileError
+
+    public fun changeLoanding(valor:Boolean){
+        _isLoading.postValue(valor)
+    }
+
+    fun fetchUserProfile() {
+        val userId = getId()
+        val token = getToken()
+
+        if (userId.isNullOrEmpty() || token.isNullOrEmpty()) {
+            _profileError.postValue("No se encontró información de usuario.")
+            return
+        }
+
+        viewModelScope.launch {
+            try {
+                val response = ApiClient.service.getUserProfile(userId, "Bearer $token")
+                if (!response.HasError) {
+                    _userProfile.postValue(response.Result)
+                } else {
+                    _profileError.postValue(response.Message)
+                }
+            } catch (e: HttpException) {
+                _profileError.postValue("Error en la consulta: ${e.message()}")
+            } catch (e: Exception) {
+                _profileError.postValue("Error de conexión: ${e.message}")
+            }
+        }
+    }
 
     fun register(
         nombres: String,
@@ -72,7 +109,7 @@ class AuthViewModel(private val context: Context) : ViewModel() {
             try {
                 val response = ApiClient.service.login(LoginRequest(correo, password))
                 if (!response.HasError) {
-                    saveToken(response.Result?.token ?: "")
+                    saveToken(response.Result?.Token ?: "", response.Result?.Id ?: "")
                     _loginSuccess.postValue(true)
                 } else {
                     _loginMessage.postValue(response.Message)
@@ -92,15 +129,24 @@ class AuthViewModel(private val context: Context) : ViewModel() {
         }
     }
 
-    private fun saveToken(token: String) {
-        sharedPreferences.edit().putString("auth_token", token).apply()
+    private fun saveToken(token: String, id: String) {
+        sharedPreferences.edit()
+            .putString("auth_token", token)
+            .putString("id", id)
+            .apply()
     }
 
     fun getToken(): String? {
         return sharedPreferences.getString("auth_token", null)
     }
 
+    fun getId(): String? {
+        return sharedPreferences.getString("id", null)
+    }
+
     fun logout() {
-        sharedPreferences.edit().remove("auth_token").apply()
+        sharedPreferences.edit()
+            .remove("id")
+            .remove("auth_token").apply()
     }
 }

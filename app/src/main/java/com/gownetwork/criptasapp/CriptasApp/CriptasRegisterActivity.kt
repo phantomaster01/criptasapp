@@ -1,4 +1,4 @@
-package com.gownetwork.ctiptasapp.CriptasApp
+package com.gownetwork.criptasapp.CriptasApp
 
 import android.R
 import android.app.DatePickerDialog
@@ -8,16 +8,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.MaterialDatePicker
+import com.gownetwork.criptasapp.viewmodel.AuthViewModel
+import com.gownetwork.criptasapp.viewmodel.AuthViewModelFactory
 import com.gownetwork.ctiptasapp.databinding.ActivityCriptasRegisterBinding
-import com.gownetwork.ctiptasapp.viewmodel.AuthViewModel
-import com.gownetwork.ctiptasapp.viewmodel.AuthViewModelFactory
 import java.util.Calendar
 
 class CriptasRegisterActivity : AppCompatActivity() {

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Nombre del lugar -->
+    <TextView
+        android:id="@+id/tvMarkerTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nombre del lugar"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingBottom="8dp"
+        android:textColor="@android:color/black"/>
+
+    <!-- Descripción del lugar -->
+    <TextView
+        android:id="@+id/tvMarkerDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Descripción del lugar"
+        android:textSize="16sp"
+        android:textColor="@android:color/darker_gray"
+        android:paddingBottom="16dp"/>
+
+    <!-- Botón para abrir en Google Maps -->
+    <Button
+        android:id="@+id/btnNavigate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ir a Google Maps"
+        android:drawableLeft="@android:drawable/ic_dialog_map"/>
+
+    <!-- Botón para ver criptas disponibles -->
+    <Button
+        android:id="@+id/btnViewCriptas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ver Criptas Disponibles"
+        android:drawableLeft="@android:drawable/ic_menu_info_details"
+        android:layout_marginTop="8dp"/>
+</LinearLayout>

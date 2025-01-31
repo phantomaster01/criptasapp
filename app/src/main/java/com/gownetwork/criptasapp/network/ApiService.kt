@@ -1,17 +1,22 @@
-package com.gownetwork.ctiptasapp.network
+package com.gownetwork.criptasapp.network
 
+import com.gownetwork.criptasapp.network.entities.Iglesia
+import com.gownetwork.criptasapp.network.entities.UserProfileResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Path
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
 import javax.net.ssl.*
 
-private const val BASE_URL = "https://gownetwork.icu:444/api/Movil/"
+private const val BASE_URL = "https://gownetwork.icu:444/api/"
 
 // 🔹 Configurar un TrustManager que acepte todos los certificados (Solo para pruebas)
 private fun getUnsafeOkHttpClient(): OkHttpClient {
@@ -50,7 +55,7 @@ val retrofit: Retrofit = Retrofit.Builder()
 data class LoginRequest(val Correo: String, val Password: String)
 
 data class LoginResult(
-    val token: String,
+    val Token: String,
     val Id: String
 )
 
@@ -75,12 +80,21 @@ data class Response<T>(
 // Definir la API
 interface ApiService {
 
-    @POST("login")
+    @POST("Movil/login")
     suspend fun login(@Body request: LoginRequest): Response<LoginResult?>
 
     @Headers("Content-Type: application/json-patch+json")
-    @POST("nuevo")
+    @POST("Movil/nuevo")
     suspend fun register(@Body request: RegisterRequest): Response<Boolean>
+
+    @GET("Clientes/{id}")
+    suspend fun getUserProfile(
+        @Path("id") userId: String,
+        @Header("Authorization") token: String
+    ): Response<UserProfileResponse>
+
+    @GET("Iglesias/List")
+    suspend fun getIglesias(@Header("Authorization") token: String): Response<List<Iglesia>>
 }
 
 // Instancia única de la API

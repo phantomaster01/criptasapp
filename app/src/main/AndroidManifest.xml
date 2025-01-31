@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -17,8 +19,12 @@
         android:theme="@style/Theme.CtiptasAPP"
         tools:targetApi="31">
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDlC5XF5kLZhB1wF6_2NNMYo_PBCoVBpms"/>
+
         <activity
-            android:name=".CriptasApp.CriptasLoginActivity"
+            android:name="com.gownetwork.criptasapp.CriptasAppActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,16 +33,25 @@
             </intent-filter>
 
         </activity>
+
         <activity
-            android:name=".CriptasApp.CriptasRegisterActivity"
+            android:name="com.gownetwork.criptasapp.CriptasApp.CriptasRegisterActivity"
             android:exported="false"
-            android:label="@string/title_activity_criptas_login" />
-        <activity
-            android:name=".CriptasApp.CriptaAppActivity"
-            android:exported="true">
+            android:label="@string/title_activity_criptas_login" >
         </activity>
+
         <activity
-            android:name=".CriptasApp.MainActivity"
+            android:name="com.gownetwork.criptasapp.CriptasApp.CriptasLoginActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name="com.gownetwork.criptasapp.CriptasApp.CriptasDisponiblesActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name="com.gownetwork.criptasapp.CriptasApp.MainActivity"
             android:exported="true">
         </activity>
 

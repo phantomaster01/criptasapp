@@ -1,15 +1,14 @@
-package com.gownetwork.ctiptasapp.CriptasApp
+package com.gownetwork.criptasapp.CriptasApp
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isGone
 import androidx.lifecycle.ViewModelProvider
+import com.gownetwork.criptasapp.viewmodel.AuthViewModel
+import com.gownetwork.criptasapp.viewmodel.AuthViewModelFactory
 import com.gownetwork.ctiptasapp.databinding.ActivityCriptasLoginBinding
-import com.gownetwork.ctiptasapp.viewmodel.AuthViewModel
-import com.gownetwork.ctiptasapp.viewmodel.AuthViewModelFactory
 
 class CriptasLoginActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.gownetwork.ctiptasapp.viewmodel
+package com.gownetwork.criptasapp.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.ViewModel

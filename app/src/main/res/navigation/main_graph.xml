@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/mapsFragment">
+
+    <fragment
+        android:id="@+id/criptasFragment"
+        android:name="com.gownetwork.criptasapp.CriptasApp.fragments.CriptasFragment"
+        android:label="Criptas"
+        tools:layout="@layout/fragment_mis_criptas"/>
+
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.gownetwork.ctiptasapp.CriptasApp.fragments.MapsFragment"
+        android:label="Mapa"
+        tools:layout="@layout/fragment_maps"/>
+
+    <fragment
+        android:id="@+id/perfilFragment"
+        android:name="com.gownetwork.criptasapp.CriptasApp.fragments.PerfilFragment"
+        android:label="Perfil"
+        tools:layout="@layout/fragment_mi_perfil"/>
+</navigation>
