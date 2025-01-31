@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.gownetwork.criptasapp.viewmodel.AuthViewModel
 import com.gownetwork.criptasapp.viewmodel.AuthViewModelFactory
@@ -17,6 +18,7 @@ class CriptasLoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         binding = ActivityCriptasLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

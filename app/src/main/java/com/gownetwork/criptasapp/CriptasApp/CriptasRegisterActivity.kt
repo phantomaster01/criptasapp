@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.gownetwork.criptasapp.viewmodel.AuthViewModel
 import com.gownetwork.criptasapp.viewmodel.AuthViewModelFactory
@@ -23,6 +24,8 @@ class CriptasRegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        supportActionBar?.hide()
         binding = ActivityCriptasRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
         authViewModel = ViewModelProvider(this, AuthViewModelFactory(applicationContext))[AuthViewModel::class.java]
