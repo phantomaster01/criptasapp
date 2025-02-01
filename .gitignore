@@ -1,15 +1,69 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
+# 🔹 Directorios de compilación y cache
+/.gradle/
+/build/
+/out/
+/captures/
+/navigation.json
+
+# 🔹 Archivos de configuración de Android Studio
+/.idea/
 /.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+/.idea/libraries/
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/gradle.xml
+/.idea/caches/
+/.idea/httpRequests/
+/.idea/dictionaries/
+/.idea/codeStyles/
+/.idea/vcs.xml
+/.idea/deploymentTargetDropDown.xml
+
+# 🔹 Caché de Gradle
+.gradle/
+/build/
+/out/
+/.cxx/
+/.externalNativeBuild/
+
+# 🔹 Archivos de compilación
+*.apk
+*.ap_
+*.dex
+*.so
+*.o
+*.jar
+*.war
+*.ear
+*.class
+*.hprof
+*.swp
+*.swo
+*.iml
+
+# 🔹 Archivos de seguridad
+/local.properties
+*.keystore
+*.jks
+*.pem
+*.crt
+*.p12
+*.key
+
+# 🔹 Archivos generados por el sistema
 .DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
-local.properties
+Thumbs.db
+*.log
+*.pyc
+*.class
+*.lock
+*.orig
+*.rej
+
+# 🔹 Configuración de Gradle Wrapper
+/gradle/wrapper/gradle-wrapper.properties
+
+# 🔹 Configuración de IDEs adicionales
+/.vscode/
+/*.sublime-project
+/*.sublime-workspace
