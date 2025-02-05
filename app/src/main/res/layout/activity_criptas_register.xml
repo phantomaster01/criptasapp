@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
@@ -8,45 +9,15 @@
     android:background="@drawable/degradado"
     tools:context="com.gownetwork.criptasapp.CriptasApp.CriptasRegisterActivity">
 
-    <LinearLayout
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:background="@color/purple_700"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-      <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/logo2"
-        android:layout_marginLeft="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-      <TextView
-        android:layout_marginHorizontal="10dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Registro De Usuarios"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintStart_toStartOf="parent">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,6 +27,14 @@
             android:padding="20dp"
             android:background="@drawable/degradado">
 
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/logo7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <!-- Título -->
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
@@ -63,7 +42,7 @@
                 android:text="Registro"
                 android:textSize="30sp"
                 android:textStyle="bold"
-                android:textColor="@color/black"/>
+                android:textColor="@color/white"/>
 
             <!-- Campos de Registro -->
             <com.google.android.material.textfield.TextInputLayout
@@ -71,7 +50,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:boxStrokeColor="@color/teal_700"
-                app:boxBackgroundMode="filled">
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="outline">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextNombre"
                     android:layout_width="match_parent"
@@ -85,7 +65,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:boxStrokeColor="@color/teal_700"
-                app:boxBackgroundMode="filled">
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="outline">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextApellido"
                     android:layout_width="match_parent"
@@ -99,7 +80,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:boxStrokeColor="@color/teal_700"
-                app:boxBackgroundMode="filled">
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="outline">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextDireccion"
                     android:layout_width="match_parent"
@@ -113,13 +95,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:boxStrokeColor="@color/teal_700"
-                app:boxBackgroundMode="filled">
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="outline">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextTelefono"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Teléfono"
-                    android:inputType="phone"/>
+                    android:inputType="phone" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -127,7 +111,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:boxStrokeColor="@color/teal_700"
-                app:boxBackgroundMode="filled">
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="outline">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextFechaNac"
                     android:layout_width="match_parent"
@@ -142,7 +127,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:boxStrokeColor="@color/teal_700"
-                app:boxBackgroundMode="filled"
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="outline"
                 app:endIconMode="dropdown_menu">
 
                 <AutoCompleteTextView
@@ -162,7 +148,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:boxStrokeColor="@color/teal_700"
-                app:boxBackgroundMode="filled">
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="outline">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextEmail"
                     android:layout_width="match_parent"
@@ -176,7 +163,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:boxStrokeColor="@color/teal_700"
-                app:boxBackgroundMode="filled"
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="outline"
                 app:endIconMode="password_toggle">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextPassword"
@@ -198,9 +186,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:backgroundTint="?attr/colorPrimary"
+                    android:backgroundTint="@color/teal_200"
                     android:text="Registrarse"
-                    android:textColor="@android:color/white"
+                    android:textColor="@android:color/black"
                     android:textSize="17sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -233,11 +221,12 @@
                 android:layout_marginTop="10dp"
                 android:backgroundTint="?attr/colorSecondary"
                 android:text="Volver al Login"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textSize="17sp"/>
         </LinearLayout>
 
     </ScrollView>
+
 
 
 

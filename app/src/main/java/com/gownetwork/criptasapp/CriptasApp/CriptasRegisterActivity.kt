@@ -5,9 +5,14 @@ import android.app.DatePickerDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputFilter
+import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -17,13 +22,35 @@ import com.gownetwork.criptasapp.viewmodel.AuthViewModelFactory
 import com.gownetwork.ctiptasapp.databinding.ActivityCriptasRegisterBinding
 import java.util.Calendar
 
-class CriptasRegisterActivity : AppCompatActivity() {
+class qCriptasRegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCriptasRegisterBinding
     private lateinit var authViewModel: AuthViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding = ActivityCriptasRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val editTextTelefono = binding.editTextTelefono
+        editTextTelefono.filters = arrayOf(InputFilter.LengthFilter(10))
+
+        editTextTelefono.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val regex = Regex ("^[0-9]{0,10}$")
+                if(!s.toString().matches(regex)){
+                    editTextTelefono.error = "Solo Puedes Ingresar Maximo 10 Digitos"
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+
+        })
+
+
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         supportActionBar?.hide()
         binding = ActivityCriptasRegisterBinding.inflate(layoutInflater)
@@ -37,13 +64,15 @@ class CriptasRegisterActivity : AppCompatActivity() {
             val selectedSex = sexoOptions[position]
             Log.d("SEXO_SELECCIONADO", "Seleccionado: $selectedSex")
         }
+
+
         binding.editTextFechaNac.setOnClickListener {
             val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-            val datePickerDialog = DatePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog,
+            val datePickerDialog = DatePickerDialog(this, R.style.Theme_Holo_Light_Dialog,
                 { _, selectedYear, selectedMonth, selectedDay ->
                     val formattedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
                     binding.editTextFechaNac.setText(formattedDate)
