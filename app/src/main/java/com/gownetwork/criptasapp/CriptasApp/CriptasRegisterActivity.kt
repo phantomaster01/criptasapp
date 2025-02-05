@@ -22,7 +22,7 @@ import com.gownetwork.criptasapp.viewmodel.AuthViewModelFactory
 import com.gownetwork.ctiptasapp.databinding.ActivityCriptasRegisterBinding
 import java.util.Calendar
 
-class qCriptasRegisterActivity : AppCompatActivity() {
+class CriptasRegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCriptasRegisterBinding
     private lateinit var authViewModel: AuthViewModel

@@ -102,6 +102,7 @@
                     android:id="@+id/editTextTelefono"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLength="10"
                     android:hint="Teléfono"
                     android:inputType="phone" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -182,7 +183,6 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnRegisterSubmit"
-                    style="@style/Widget.Material3.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -215,7 +215,6 @@
             <!-- Botón para Volver al Login -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnBackToLogin"
-                style="@style/Widget.Material3.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
