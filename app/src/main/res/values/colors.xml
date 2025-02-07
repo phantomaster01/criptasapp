@@ -9,6 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorInicio">#561771</color> <!-- Naranja -->
     <color name="colorFin">#8021C5</color>   <!-- Fucsia -->
-    <color name="colorGris">#4D4D4D</color> <!-- Morado -->
+    <color name="colorGris">#999999</color> <!-- Morado -->
     <color name="colorRosaFuerte">#FF1493</color> <!-- Rosa Neón -->
 </resources>

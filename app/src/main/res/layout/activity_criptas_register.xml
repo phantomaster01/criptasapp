@@ -186,9 +186,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:backgroundTint="@color/teal_200"
+                    android:backgroundTint="@color/colorGris"
                     android:text="Registrarse"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/white"
                     android:textSize="17sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -218,9 +218,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="?attr/colorSecondary"
+                android:backgroundTint="@color/colorGris"
                 android:text="Volver al Login"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="17sp"/>
         </LinearLayout>
 
