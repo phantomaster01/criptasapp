@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gownetwork.criptasapp.CriptasApp.activitys.CriptasDisponiblesActivity">
+    tools:context="com.gownetwork.criptasapp.CriptasApp.activitys.ServiciosActivity">
 
     <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
@@ -37,6 +37,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/item_cripta_by_iglesia"/>
+        tools:listitem="@layout/item_servicios"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

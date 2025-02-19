@@ -11,8 +11,10 @@ import com.gownetwork.criptasapp.CriptasApp.CriptasLoginActivity
 import com.gownetwork.criptasapp.CriptasApp.MainActivity
 import com.gownetwork.criptasapp.network.ApiClient
 import com.gownetwork.criptasapp.viewmodel.AuthViewModel
-import com.gownetwork.ctiptasapp.databinding.ActivityCriptaAppBinding
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import mx.com.gownetwork.criptas.databinding.ActivityCriptaAppBinding
 import retrofit2.HttpException
 
 class CriptasAppActivity : AppCompatActivity() {
@@ -20,6 +22,7 @@ class CriptasAppActivity : AppCompatActivity() {
     private lateinit var authViewModel: AuthViewModel
 
     lateinit var binding : ActivityCriptaAppBinding
+    var idServicio : String = "0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +32,12 @@ class CriptasAppActivity : AppCompatActivity() {
         binding = ActivityCriptaAppBinding.inflate(layoutInflater)
         setContentView(binding.root)
         // Inicializar AuthViewModel
-        authViewModel = AuthViewModel(this)
+        authViewModel = AuthViewModel(this@CriptasAppActivity)
+
+        val deepLinkData = intent?.data
+        deepLinkData?.lastPathSegment?.let {
+            idServicio = it
+        }
 
         // Verificar si hay token e ID
         val token = authViewModel.getToken()
@@ -47,14 +55,14 @@ class CriptasAppActivity : AppCompatActivity() {
     private fun validarToken(userId: String, token: String) {
         lifecycleScope.launch {
             try {
-                val response = ApiClient.service.getUserProfile(userId, "Bearer $token")
+                withContext(NonCancellable) { // Evita la cancelación si la Activity se cierra
+                    val response = ApiClient.service.getUserProfile(userId, "Bearer $token")
 
-                if (response.HttpCode == 200) {
-                    // Token válido, ir al MainActivity
-                    navigateToMain()
-                } else {
-                    // Token inválido, borrar datos y enviar a Login
-                    handleInvalidToken()
+                    if (response.HttpCode == 200) {
+                        navigateToMain()
+                    } else {
+                        handleInvalidToken()
+                    }
                 }
             } catch (e: HttpException) {
                 Log.e("CriptaAppActivity", "Error HTTP: ${e.response()?.code()}")
@@ -66,14 +74,17 @@ class CriptasAppActivity : AppCompatActivity() {
         }
     }
 
+
     private fun navigateToMain() {
         val intent = Intent(this, MainActivity::class.java)
+        idServicio?.let { intent.putExtra("ID_SERVICIO", it) }
         startActivity(intent)
         finish() // Cierra esta actividad para evitar que el usuario regrese aquí
     }
 
     private fun navigateToLogin() {
         val intent = Intent(this, CriptasLoginActivity::class.java)
+        idServicio?.let { intent.putExtra("ID_SERVICIO", it) }
         startActivity(intent)
         finish()
     }

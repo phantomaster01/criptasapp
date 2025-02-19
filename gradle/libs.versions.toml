@@ -21,6 +21,9 @@ maps = "18.1.0"
 location = "21.0.1"
 volley = "1.2.1"
 mapsVersion = "3.1.0-beta"
+firebasev = "4.4.2"
+firebasePv = "33.9.0"
+firebaseMessaging = "23.2.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -46,7 +49,10 @@ services-maps = { group = "com.google.android.gms", name = "play-services-maps",
 services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "location" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 maps = { group = "com.google.android.libraries.maps", name = "maps", version.ref = "mapsVersion" }
+services-firebase = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebasePv" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+firebase-android = { id = "com.google.gms.google-services", version.ref = "firebasev" }

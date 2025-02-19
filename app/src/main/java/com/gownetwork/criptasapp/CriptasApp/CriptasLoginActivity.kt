@@ -1,15 +1,21 @@
 package com.gownetwork.criptasapp.CriptasApp
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.gownetwork.criptasapp.CriptasApp.bottomSheet.ServicioBottomSheet
 import com.gownetwork.criptasapp.viewmodel.AuthViewModel
 import com.gownetwork.criptasapp.viewmodel.AuthViewModelFactory
-import com.gownetwork.ctiptasapp.databinding.ActivityCriptasLoginBinding
+import mx.com.gownetwork.criptas.databinding.ActivityCriptasLoginBinding
 
 class CriptasLoginActivity : AppCompatActivity() {
 
@@ -19,10 +25,20 @@ class CriptasLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        supportActionBar?.hide()
         binding = ActivityCriptasLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         authViewModel = ViewModelProvider(this, AuthViewModelFactory(applicationContext))[AuthViewModel::class.java]
+
+        try{
+            val idServicio = intent.getStringExtra("ID_SERVICIO")
+            if (!idServicio.isNullOrEmpty() && idServicio != "0") {
+                onVerMasClick(idServicio)
+            }
+        }catch (ex:Exception){
+            ex.printStackTrace()
+        }
 
         // Observa el estado del login
         authViewModel.loginSuccess.observe(this) { success ->
@@ -56,11 +72,34 @@ class CriptasLoginActivity : AppCompatActivity() {
             val intent = Intent(this, CriptasRegisterActivity::class.java)
             startActivity(intent)
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+                requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+
+    }
+
+    private val requestNotificationPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                Toast.makeText(this, "Permiso de notificaciones concedido", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Permiso de notificaciones denegado", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+    private fun onVerMasClick(idServicio: String) {
+        val bottomSheet = ServicioBottomSheet(idServicio)
+        bottomSheet.show(supportFragmentManager, bottomSheet.tag)
     }
 
     private fun goToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-        finish() // Cierra LoginActivity para evitar volver atrás con el botón de retroceso
+        finish()
     }
 }

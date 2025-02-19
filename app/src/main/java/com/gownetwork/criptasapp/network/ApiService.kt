@@ -1,6 +1,10 @@
 package com.gownetwork.criptasapp.network
 
+import com.gownetwork.criptasapp.network.entities.CriptasByIglesia
 import com.gownetwork.criptasapp.network.entities.Iglesia
+import com.gownetwork.criptasapp.network.entities.MisCriptas
+import com.gownetwork.criptasapp.network.entities.Servicio
+import com.gownetwork.criptasapp.network.entities.SolicitudInfo
 import com.gownetwork.criptasapp.network.entities.UserProfileResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -52,7 +56,11 @@ val retrofit: Retrofit = Retrofit.Builder()
     .build()
 
 // Modelos de datos
-data class LoginRequest(val Correo: String, val Password: String)
+data class LoginRequest(
+    val Correo: String,
+    val Password: String,
+    val TokenFireBase:String?
+)
 
 data class LoginResult(
     val Token: String,
@@ -95,9 +103,39 @@ interface ApiService {
 
     @GET("Iglesias/List")
     suspend fun getIglesias(@Header("Authorization") token: String): Response<List<Iglesia>>
+
+    @GET("servicios/ListActive/{idIglesia}")
+    suspend fun getServicios(
+        @Path("idIglesia") idIglesia: String,
+        @Header("Authorization") token: String?
+    ): Response<List<Servicio>>
+
+    @GET("Movil/servicio/{idServicio}")
+    suspend fun getServicioDetalle(
+        @Path("idServicio") idServicio: String,
+        @Header("Authorization") token: String?
+    ): Response<Servicio>
+
+    @GET("Criptas/ListDisponible/Iglesia/{id}")
+    suspend fun getCriptasDisponibles(
+        @Path("id") idIglesia: String,
+        @Header("Authorization") token: String?
+    ): Response<List<CriptasByIglesia>>
+
+    @GET("Clientes/MisCriptas/{id}")
+    suspend fun getMisCriptas(
+        @Path("id") idCliente: String,
+        @Header("Authorization") token: String?
+    ): Response<List<MisCriptas>>
+
+    @POST("SolicitudesInfo/Create")
+    suspend fun crearSolicitud(
+        @Header("Authorization") token: String?,
+        @Body solicitud: SolicitudInfo
+    ): Response<SolicitudInfo>
+
 }
 
-// Instancia única de la API
 object ApiClient {
     val service: ApiService by lazy {
         retrofit.create(ApiService::class.java)

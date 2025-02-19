@@ -9,17 +9,15 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.gownetwork.criptasapp.viewmodel.AuthViewModel
 import com.gownetwork.criptasapp.viewmodel.AuthViewModelFactory
-import com.gownetwork.ctiptasapp.databinding.ActivityCriptasRegisterBinding
+import mx.com.gownetwork.criptas.databinding.ActivityCriptasRegisterBinding
 import java.util.Calendar
 
 class CriptasRegisterActivity : AppCompatActivity() {
@@ -115,12 +113,19 @@ class CriptasRegisterActivity : AppCompatActivity() {
             val sexo = binding.editTextSexo.text.toString().trim()
             val email = binding.editTextEmail.text.toString().trim()
             val password = binding.editTextPassword.text.toString().trim()
+            val passwordConfirm = binding.editTextPasswordConfirm.text.toString().trim()
 
             // Validaciones
             if (nombres.isEmpty() || apellidos.isEmpty() || direccion.isEmpty() ||
                 telefono.isEmpty() || fechaNac.isEmpty() || sexo.isEmpty() ||
-                email.isEmpty() || password.isEmpty()) {
+                email.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty()) {
                 Toast.makeText(this, "Por favor, completa todos los campos.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }else if(password.length < 6){
+                Toast.makeText(this, "Contraseña minima de 6 caracteres.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }else if(password != passwordConfirm){
+                Toast.makeText(this, "La contraseña no coinciden.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 

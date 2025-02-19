@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "496262025427",
+    "project_id": "criptasservice",
+    "storage_bucket": "criptasservice.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496262025427:android:62eaa7c64dc57836874426",
+        "android_client_info": {
+          "package_name": "mx.com.gownetwork.criptas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-ikM-IWH5PuGwuj9tPGugNrKvCnWv7NU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

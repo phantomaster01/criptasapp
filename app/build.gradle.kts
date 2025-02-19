@@ -1,14 +1,15 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.firebase.android)
 }
 
 android {
-    namespace = "com.gownetwork.ctiptasapp"
+    namespace = "mx.com.gownetwork.criptas"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.gownetwork.ctiptasapp"
+        applicationId = "mx.com.gownetwork.criptas"
         minSdk = 21
         targetSdk = 35
         versionCode = 1
@@ -58,6 +59,8 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.services.maps)
     implementation(libs.services.location)
+    implementation(libs.services.firebase)
+    implementation(libs.firebase.messaging)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

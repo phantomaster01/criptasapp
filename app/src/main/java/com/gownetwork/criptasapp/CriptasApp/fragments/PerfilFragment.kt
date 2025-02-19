@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.gownetwork.criptasapp.CriptasApp.CriptasLoginActivity
-import com.gownetwork.ctiptasapp.databinding.FragmentMiPerfilBinding
+import mx.com.gownetwork.criptas.databinding.FragmentMiPerfilBinding
 import com.gownetwork.criptasapp.network.entities.formatFecha
 import com.gownetwork.criptasapp.viewmodel.AuthViewModel
 import com.gownetwork.criptasapp.viewmodel.AuthViewModelFactory

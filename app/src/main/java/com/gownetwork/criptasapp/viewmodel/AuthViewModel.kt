@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gownetwork.criptasapp.CriptasApp.extensions.obtenerFcmToken
 import com.gownetwork.criptasapp.network.ApiClient
 import com.gownetwork.criptasapp.network.LoginRequest
 import com.gownetwork.criptasapp.network.RegisterRequest
@@ -107,7 +108,7 @@ class AuthViewModel(private val context: Context) : ViewModel() {
             delay(2000) // Simula tiempo de carga
 
             try {
-                val response = ApiClient.service.login(LoginRequest(correo, password))
+                val response = ApiClient.service.login(LoginRequest(correo, password, obtenerFcmToken()))
                 if (!response.HasError) {
                     saveToken(response.Result?.Token ?: "", response.Result?.Id ?: "")
                     _loginSuccess.postValue(true)

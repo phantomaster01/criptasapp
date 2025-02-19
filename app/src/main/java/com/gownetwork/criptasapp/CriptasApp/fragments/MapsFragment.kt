@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -26,12 +27,13 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.gownetwork.criptasapp.CriptasApp.CriptasDisponiblesActivity
+import com.gownetwork.criptasapp.CriptasApp.activitys.CriptasDisponiblesActivity
+import com.gownetwork.criptasapp.CriptasApp.activitys.ServiciosActivity
 import com.gownetwork.criptasapp.network.ApiClient
 import com.gownetwork.criptasapp.network.entities.Iglesia
 import com.gownetwork.criptasapp.viewmodel.AuthViewModel
-import com.gownetwork.ctiptasapp.R
-import com.gownetwork.ctiptasapp.databinding.FragmentMapsBinding
+import mx.com.gownetwork.criptas.R
+import mx.com.gownetwork.criptas.databinding.FragmentMapsBinding
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
@@ -150,6 +152,7 @@ class MapsFragment :  Fragment(), OnMapReadyCallback {
         // Botones
         val btnNavigate = view.findViewById<Button>(R.id.btnNavigate)
         val btnViewCriptas = view.findViewById<Button>(R.id.btnViewCriptas)
+        val btnServices = view.findViewById<Button>(R.id.btnServices)
 
         btnNavigate.setOnClickListener {
             openGoogleMaps(marker.position)
@@ -157,11 +160,32 @@ class MapsFragment :  Fragment(), OnMapReadyCallback {
         }
 
         btnViewCriptas.setOnClickListener {
-            openCriptasScreen()
+            val iglesia = iglesiasList.find { it.Nombre == marker.title }
+            if (iglesia != null) {
+                openCriptasScreen(iglesia.Id)
+            } else {
+                Toast.makeText(requireContext(), "No se encontró la iglesia", Toast.LENGTH_SHORT).show()
+            }
+            bottomSheetDialog.dismiss()
+        }
+
+        btnServices.setOnClickListener {
+            val iglesia = iglesiasList.find { it.Nombre == marker.title }
+            if (iglesia != null) {
+                openServicesScreen(iglesia.Id)
+            } else {
+                Toast.makeText(requireContext(), "No se encontró la iglesia", Toast.LENGTH_SHORT).show()
+            }
             bottomSheetDialog.dismiss()
         }
 
         bottomSheetDialog.show()
+    }
+
+    private fun openServicesScreen(idIglesia: String) {
+        val intent = Intent(requireContext(), ServiciosActivity::class.java)
+        intent.putExtra("ID_IGLESIA", idIglesia)
+        startActivity(intent)
     }
 
     private fun openGoogleMaps(latLng: LatLng) {
@@ -176,19 +200,28 @@ class MapsFragment :  Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun openCriptasScreen() {
+    private fun openCriptasScreen(idIglesia: String) {
         val intent = Intent(requireContext(), CriptasDisponiblesActivity::class.java)
+        intent.putExtra("ID_IGLESIA", idIglesia)
         startActivity(intent)
     }
 
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
+        val permisos = mutableListOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permisos.add(Manifest.permission.POST_NOTIFICATIONS) // 🔹 Agregar permiso de notificaciones para Android 13+
+        }
+
+        if (permisos.all { ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED }) {
             googleMap.isMyLocationEnabled = true
             moveToUserLocation()
         } else {
-            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            requestPermissionLauncher.launch(permisos.toTypedArray())
         }
         // Obtener datos de la API
         fetchIglesias()
@@ -217,23 +250,28 @@ class MapsFragment :  Fragment(), OnMapReadyCallback {
     }
 
     private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            if (isGranted) {
-                // Permiso concedido, habilitar ubicación
-                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-                    try {
-                        googleMap.isMyLocationEnabled = true
-                        moveToUserLocation()
-                    } catch (e: SecurityException) {
-                        Log.e("MapsFragment", "No se puede habilitar la ubicación: ${e.message}")
-                    }
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            val locationGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true
+            val notificationGranted = permissions[Manifest.permission.POST_NOTIFICATIONS] == true
+
+            if (locationGranted) {
+                try {
+                    googleMap.isMyLocationEnabled = true
+                    moveToUserLocation()
+                } catch (e: SecurityException) {
+                    Log.e("MapsFragment", "No se puede habilitar la ubicación: ${e.message}")
                 }
             } else {
-                // Permiso denegado, mostrar mensaje al usuario
                 Toast.makeText(requireContext(), "Permiso de ubicación denegado", Toast.LENGTH_SHORT).show()
             }
+
+            if (notificationGranted) {
+                Log.d("MapsFragment", "Permiso de notificaciones concedido")
+            } else {
+                Log.d("MapsFragment", "Permiso de notificaciones denegado")
+            }
         }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

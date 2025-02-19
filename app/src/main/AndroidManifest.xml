@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="mx.com.gownetwork.criptas">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
 
     <application
         android:allowBackup="true"
@@ -20,6 +23,22 @@
         tools:targetApi="31">
 
         <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/logo4" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorPrimary" />
+
+        <service
+            android:name="com.gownetwork.criptasapp.network.FireBase.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDlC5XF5kLZhB1wF6_2NNMYo_PBCoVBpms"/>
 
@@ -32,6 +51,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="criptasapp"
+                    android:host="servicio"
+                    android:pathPrefix="/" />
+            </intent-filter>
+
         </activity>
 
         <activity
@@ -41,12 +70,20 @@
         </activity>
 
         <activity
+            android:name="com.gownetwork.criptasapp.CriptasApp.activitys.ServiciosActivity"
+            android:exported="false"
+            android:theme="@style/Theme.CriptasAppBar"
+            android:label="@string/title_activity_criptas_login" >
+        </activity>
+
+        <activity
             android:name="com.gownetwork.criptasapp.CriptasApp.CriptasLoginActivity"
             android:exported="false">
         </activity>
 
         <activity
-            android:name="com.gownetwork.criptasapp.CriptasApp.CriptasDisponiblesActivity"
+            android:name="com.gownetwork.criptasapp.CriptasApp.activitys.CriptasDisponiblesActivity"
+            android:theme="@style/Theme.CriptasAppBar"
             android:exported="false">
         </activity>
 

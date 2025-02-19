@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="6dp"
+    app:cardBackgroundColor="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Nombre de la cripta -->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvCriptaNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cripta: 001"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"/>
+
+        <!-- Ubicación (Sección - Zona - Iglesia) -->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvUbicacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ubicación: Sección A - Zona Sacristía - Iglesia Cristo Obrero"
+            android:textSize="14sp"
+            android:textColor="@color/colorGris"
+            android:fontFamily="sans-serif"/>
+
+        <!-- Fecha de Compra -->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvFechaCompra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha de Compra: 2025-02-19"
+            android:textSize="14sp"
+            android:textColor="@color/peso_normal"
+            android:fontFamily="sans-serif-medium"
+            android:paddingTop="8dp"/>
+
+        <!-- Fallecidos y Beneficiarios -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="8dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvFallecidos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fallecidos: 0"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-medium"
+                android:layout_weight="1"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvBeneficiarios"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Beneficiarios: 0"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-medium"
+                android:layout_weight="1"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvVisitas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Visitas: 0"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-medium"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
