@@ -1,5 +1,6 @@
 package com.gownetwork.criptasapp.CriptasApp.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.gownetwork.criptasapp.CriptasApp.MainActivity
+import com.gownetwork.criptasapp.CriptasApp.activitys.MenuCriptaActivity
 import com.gownetwork.criptasapp.CriptasApp.adapters.MisCriptasAdapter
 import com.gownetwork.criptasapp.network.ApiClient
 import com.gownetwork.criptasapp.network.Repository.CriptasRepository
@@ -51,6 +54,12 @@ class CriptasFragment: Fragment() {
                 Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun goToMenuCriptaActivity(id_cripta:String) {
+        val intent = Intent(requireContext(), MenuCriptaActivity::class.java)
+        intent.putExtra("IdCripta", id_cripta)
+        startActivity(intent)
     }
 
     override fun onDestroyView() {

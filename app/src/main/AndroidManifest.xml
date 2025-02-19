@@ -77,6 +77,13 @@
         </activity>
 
         <activity
+            android:name="com.gownetwork.criptasapp.CriptasApp.activitys.MenuCriptaActivity"
+            android:exported="false"
+            android:theme="@style/Theme.CriptasAppBar"
+            android:label="@string/title_activity_criptas_login" >
+        </activity>
+
+        <activity
             android:name="com.gownetwork.criptasapp.CriptasApp.CriptasLoginActivity"
             android:exported="false">
         </activity>
