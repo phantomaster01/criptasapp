@@ -42,7 +42,7 @@ class CriptasFragment: Fragment() {
 
     private fun initObservers() {
         viewModel.misCriptas.observe(viewLifecycleOwner) { criptas ->
-            binding.rv.adapter = MisCriptasAdapter(criptas)
+            binding.rv.adapter = MisCriptasAdapter(criptas,::goToMenuCriptaActivity)
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->

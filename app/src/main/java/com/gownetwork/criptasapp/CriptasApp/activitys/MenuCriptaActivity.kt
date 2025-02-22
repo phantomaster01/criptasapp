@@ -14,6 +14,7 @@ class MenuCriptaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMenuCriptaBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         loadId()
     }
     private fun loadId(){

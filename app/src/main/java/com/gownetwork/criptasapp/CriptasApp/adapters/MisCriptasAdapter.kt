@@ -7,12 +7,13 @@ import com.gownetwork.criptasapp.network.entities.MisCriptas
 import mx.com.gownetwork.criptas.databinding.ItemMisCriptasBinding
 
 class MisCriptasAdapter(
-    private val criptasList: List<MisCriptas>
+    private val criptasList: List<MisCriptas>,
+    private val open: (String) -> Unit
 ) : RecyclerView.Adapter<MisCriptasAdapter.MisCriptasViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MisCriptasViewHolder {
         val binding = ItemMisCriptasBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MisCriptasViewHolder(binding)
+        return MisCriptasViewHolder(binding,open)
     }
 
     override fun onBindViewHolder(holder: MisCriptasViewHolder, position: Int) {
@@ -21,14 +22,20 @@ class MisCriptasAdapter(
 
     override fun getItemCount(): Int = criptasList.size
 
-    class MisCriptasViewHolder(private val binding: ItemMisCriptasBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MisCriptasViewHolder(private val binding: ItemMisCriptasBinding, private val open: (String) -> Unit) : RecyclerView.ViewHolder(binding.root) {
         fun bind(cripta: MisCriptas) {
-            binding.tvCriptaNombre.text = "Cripta: ${cripta.cripta}"
-            binding.tvUbicacion.text = "Ubicación: Sección ${cripta.seccion} - Zona ${cripta.zona} - Iglesia ${cripta.iglesia}"
-            binding.tvFechaCompra.text = "Fecha de Compra: ${cripta.fechaCompra}"
-            binding.tvFallecidos.text = "Fallecidos: ${cripta.fallecidos}"
-            binding.tvBeneficiarios.text = "Beneficiarios: ${cripta.beneficiarios}"
-            binding.tvVisitas.text = "Visitas: ${cripta.visitas}"
+            with(binding){
+                contenedor.setOnClickListener{
+                    open(cripta.id)
+                }
+                tvCriptaNombre.text = "Cripta: ${cripta.cripta}"
+                tvUbicacion.text = "Ubicación: Sección ${cripta.seccion} - Zona ${cripta.zona} - Iglesia ${cripta.iglesia}"
+                tvFechaCompra.text = "Fecha de Compra: ${cripta.fechaCompra}"
+                tvFallecidos.text = "Fallecidos: ${cripta.fallecidos}"
+                tvBeneficiarios.text = "Beneficiarios: ${cripta.beneficiarios}"
+                tvVisitas.text = "Visitas: ${cripta.visitas}"
+            }
+
         }
     }
 }

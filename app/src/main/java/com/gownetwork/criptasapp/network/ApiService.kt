@@ -7,6 +7,7 @@ import com.gownetwork.criptasapp.network.entities.Servicio
 import com.gownetwork.criptasapp.network.entities.SolicitudInfo
 import com.gownetwork.criptasapp.network.entities.UserProfileResponse
 import okhttp3.OkHttpClient
+import okhttp3.Protocol
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,44 +17,23 @@ import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
-import java.security.SecureRandom
-import java.security.cert.X509Certificate
-import javax.net.ssl.*
+private const val BASE_URL = "https://gownetwork.dyndns.org"
 
-private const val BASE_URL = "https://gownetwork.icu:444/api/"
 
-// 🔹 Configurar un TrustManager que acepte todos los certificados (Solo para pruebas)
-private fun getUnsafeOkHttpClient(): OkHttpClient {
-    return try {
-        val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
-            override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
-            override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
-            override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
-        })
 
-        val sslContext = SSLContext.getInstance("TLS")
-        sslContext.init(null, trustAllCerts, SecureRandom())
-
-        val sslSocketFactory = sslContext.socketFactory
-
-        OkHttpClient.Builder()
-            .sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
-            .hostnameVerifier { _, _ -> true } // 🔹 Acepta cualquier host sin verificar
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            })
-            .build()
-    } catch (e: Exception) {
-        throw RuntimeException(e)
-    }
-}
-
-// 🔹 Usar Retrofit con la configuración de seguridad modificada
 val retrofit: Retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .addConverterFactory(GsonConverterFactory.create())
-    .client(getUnsafeOkHttpClient()) // 🔹 Se usa la versión insegura de OkHttpClient
+    .client(OkHttpClient.Builder()
+        .protocols(listOf(Protocol.HTTP_1_1)) // 🔹 Solo permite HTTP/1.1
+        .addInterceptor(HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        })
+        .build()
+    )
     .build()
+
+
 
 // Modelos de datos
 data class LoginRequest(
@@ -88,47 +68,47 @@ data class Response<T>(
 // Definir la API
 interface ApiService {
 
-    @POST("Movil/login")
+    @POST("/api/Movil/login")
     suspend fun login(@Body request: LoginRequest): Response<LoginResult?>
 
     @Headers("Content-Type: application/json-patch+json")
-    @POST("Movil/nuevo")
+    @POST("/api/Movil/nuevo")
     suspend fun register(@Body request: RegisterRequest): Response<Boolean>
 
-    @GET("Clientes/{id}")
+    @GET("/api/Clientes/{id}")
     suspend fun getUserProfile(
         @Path("id") userId: String,
         @Header("Authorization") token: String
     ): Response<UserProfileResponse>
 
-    @GET("Iglesias/List")
+    @GET("/api/Iglesias/List")
     suspend fun getIglesias(@Header("Authorization") token: String): Response<List<Iglesia>>
 
-    @GET("servicios/ListActive/{idIglesia}")
+    @GET("/api/servicios/ListActive/{idIglesia}")
     suspend fun getServicios(
         @Path("idIglesia") idIglesia: String,
         @Header("Authorization") token: String?
     ): Response<List<Servicio>>
 
-    @GET("Movil/servicio/{idServicio}")
+    @GET("/api/Movil/servicio/{idServicio}")
     suspend fun getServicioDetalle(
         @Path("idServicio") idServicio: String,
         @Header("Authorization") token: String?
     ): Response<Servicio>
 
-    @GET("Criptas/ListDisponible/Iglesia/{id}")
+    @GET("/api/Criptas/ListDisponible/Iglesia/{id}")
     suspend fun getCriptasDisponibles(
         @Path("id") idIglesia: String,
         @Header("Authorization") token: String?
     ): Response<List<CriptasByIglesia>>
 
-    @GET("Clientes/MisCriptas/{id}")
+    @GET("/api/Clientes/MisCriptas/{id}")
     suspend fun getMisCriptas(
         @Path("id") idCliente: String,
         @Header("Authorization") token: String?
     ): Response<List<MisCriptas>>
 
-    @POST("SolicitudesInfo/Create")
+    @POST("/api/SolicitudesInfo/Create")
     suspend fun crearSolicitud(
         @Header("Authorization") token: String?,
         @Body solicitud: SolicitudInfo
