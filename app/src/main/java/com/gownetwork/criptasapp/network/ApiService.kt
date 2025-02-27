@@ -3,6 +3,8 @@ package com.gownetwork.criptasapp.network
 import com.gownetwork.criptasapp.network.entities.CriptasByIglesia
 import com.gownetwork.criptasapp.network.entities.Iglesia
 import com.gownetwork.criptasapp.network.entities.MisCriptas
+import com.gownetwork.criptasapp.network.entities.Pago
+import com.gownetwork.criptasapp.network.entities.PagoCreate
 import com.gownetwork.criptasapp.network.entities.Servicio
 import com.gownetwork.criptasapp.network.entities.SolicitudInfo
 import com.gownetwork.criptasapp.network.entities.UserProfileResponse
@@ -17,7 +19,7 @@ import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
-private const val BASE_URL = "https://gownetwork.dyndns.org"
+private const val BASE_URL = "https://gownetwork.dyndns.org:450"
 
 
 
@@ -81,30 +83,27 @@ interface ApiService {
         @Header("Authorization") token: String
     ): Response<UserProfileResponse>
 
-    @GET("/api/Iglesias/List")
-    suspend fun getIglesias(@Header("Authorization") token: String): Response<List<Iglesia>>
+    @GET("/api/Movil/List")
+    suspend fun getIglesias(): Response<List<Iglesia>>
 
-    @GET("/api/servicios/ListActive/{idIglesia}")
+    @GET("/api/Movil/ListActive/{idIglesia}")
     suspend fun getServicios(
-        @Path("idIglesia") idIglesia: String,
-        @Header("Authorization") token: String?
+        @Path("idIglesia") idIglesia: String
     ): Response<List<Servicio>>
 
     @GET("/api/Movil/servicio/{idServicio}")
     suspend fun getServicioDetalle(
-        @Path("idServicio") idServicio: String,
-        @Header("Authorization") token: String?
+        @Path("idServicio") idServicio: String
     ): Response<Servicio>
 
-    @GET("/api/Criptas/ListDisponible/Iglesia/{id}")
+    @GET("/api/Movil/ListDisponible/Iglesia/{id}")
     suspend fun getCriptasDisponibles(
-        @Path("id") idIglesia: String,
-        @Header("Authorization") token: String?
+        @Path("id") idIglesia: String
     ): Response<List<CriptasByIglesia>>
 
     @GET("/api/Clientes/MisCriptas/{id}")
     suspend fun getMisCriptas(
-        @Path("id") idCliente: String,
+        @Path("id") idCliente: String?,
         @Header("Authorization") token: String?
     ): Response<List<MisCriptas>>
 
@@ -113,6 +112,18 @@ interface ApiService {
         @Header("Authorization") token: String?,
         @Body solicitud: SolicitudInfo
     ): Response<SolicitudInfo>
+
+    @POST("/api/Pagos/Create")
+    suspend fun crearPago(
+        @Header("Authorization") token: String?,
+        @Body solicitud: PagoCreate
+    ): Response<Pago>
+
+    @GET("/api/Pagos/Cliente/{id}")
+    suspend fun pagosCliente(
+        @Path("id") idCliente: String?,
+        @Header("Authorization") token: String?
+    ): Response<List<Pago>>
 
 }
 

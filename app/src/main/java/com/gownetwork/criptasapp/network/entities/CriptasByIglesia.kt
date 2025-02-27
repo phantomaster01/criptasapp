@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class CriptasByIglesia(
     @SerializedName("Id") val id: String,
+    @SerializedName("Precio") val precio: Double,
     @SerializedName("Cripta") val cripta: String,
     @SerializedName("Seccion") val seccion: String,
     @SerializedName("Zona") val zona: String,

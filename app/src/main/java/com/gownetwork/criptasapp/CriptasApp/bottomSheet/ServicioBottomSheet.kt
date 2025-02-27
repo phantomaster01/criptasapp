@@ -56,7 +56,7 @@ class ServicioBottomSheet(private val idServicio: String) : BottomSheetDialogFra
 
     private fun initViews()=with(binding){
         fabShare.setOnClickListener{
-            val url = "https://criptas.gownetwork.com.mx/servicio/$idServicio"
+            val url = "https://gestioncriptas.gownetwork.com.mx/servicio/$idServicio"
             val shareIntent = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
                 putExtra(Intent.EXTRA_TEXT, "Consulta este servicio: $url")

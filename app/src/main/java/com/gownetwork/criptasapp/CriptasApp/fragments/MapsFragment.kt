@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.gownetwork.criptasapp.CriptasApp.activitys.CriptasDisponiblesActivity
 import com.gownetwork.criptasapp.CriptasApp.activitys.ServiciosActivity
+import com.gownetwork.criptasapp.CriptasApp.extensions.setTitle
 import com.gownetwork.criptasapp.network.ApiClient
 import com.gownetwork.criptasapp.network.entities.Iglesia
 import com.gownetwork.criptasapp.viewmodel.AuthViewModel
@@ -58,7 +59,7 @@ class MapsFragment :  Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setTitle("Iglesias disponibles")
         // Obtener el fragmento del mapa
         val mapFragment = childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -85,15 +86,9 @@ class MapsFragment :  Fragment(), OnMapReadyCallback {
 
     private fun fetchIglesias() {
         authViewModel.changeLoanding(true)
-        val token = authViewModel.getToken()
-        if (token.isNullOrEmpty()) {
-            Toast.makeText(requireContext(), "No hay token disponible", Toast.LENGTH_SHORT).show()
-            return
-        }
-
         lifecycleScope.launch {
             try {
-                val response = ApiClient.service.getIglesias("Bearer $token")
+                val response = ApiClient.service.getIglesias()
                 if (response.HttpCode == 200) {
                     iglesiasList.clear()
                     iglesiasList.addAll(response.Result)

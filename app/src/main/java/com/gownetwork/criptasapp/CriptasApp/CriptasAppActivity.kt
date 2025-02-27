@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.gownetwork.criptasapp.CriptasApp.CriptasLoginActivity
 import com.gownetwork.criptasapp.CriptasApp.MainActivity
+import com.gownetwork.criptasapp.CriptasApp.extensions.setupFullScreen
 import com.gownetwork.criptasapp.network.ApiClient
 import com.gownetwork.criptasapp.viewmodel.AuthViewModel
 import kotlinx.coroutines.NonCancellable
@@ -26,7 +27,7 @@ class CriptasAppActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
+        setupFullScreen(true)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         enableEdgeToEdge()
         binding = ActivityCriptaAppBinding.inflate(layoutInflater)
@@ -45,7 +46,7 @@ class CriptasAppActivity : AppCompatActivity() {
 
         if (token.isNullOrEmpty() || userId.isNullOrEmpty()) {
             // Si no hay credenciales, enviar a Login
-            navigateToLogin()
+            navigateToMain()
         } else {
             // Si hay credenciales, validar el token con el servidor
             validarToken(userId, token)
@@ -82,16 +83,9 @@ class CriptasAppActivity : AppCompatActivity() {
         finish() // Cierra esta actividad para evitar que el usuario regrese aquí
     }
 
-    private fun navigateToLogin() {
-        val intent = Intent(this, CriptasLoginActivity::class.java)
-        idServicio?.let { intent.putExtra("ID_SERVICIO", it) }
-        startActivity(intent)
-        finish()
-    }
-
     private fun handleInvalidToken() {
         // Eliminar token e ID almacenado
         authViewModel.logout()
-        navigateToLogin()
+        navigateToMain()
     }
 }

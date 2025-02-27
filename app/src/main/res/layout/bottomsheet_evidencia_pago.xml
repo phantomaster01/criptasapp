@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Texto de Información -->
+    <TextView
+        android:id="@+id/txtPagoInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Evidencia de Pago"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"/>
+
+    <!-- Imagen de Vista Previa -->
+    <ImageView
+        android:id="@+id/imgPreview"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="Imagen de Pago"/>
+
+    <!-- Botones para Seleccionar/Tomar Foto -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSubirFoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Foto de Galeria"
+        android:textColor="@color/white"
+        app:icon="@drawable/ic_galery_white"
+        app:cornerRadius="8dp"
+        app:iconTint="@android:color/white"
+        app:backgroundTint="@color/colorPrimary"
+        android:layout_marginTop="10dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnTomarFoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tomar Foto"
+        android:textColor="@color/white"
+        app:icon="@drawable/ic_camera_plus_white"
+        app:cornerRadius="8dp"
+        app:iconTint="@android:color/white"
+        app:backgroundTint="@color/colorAccent"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Botón para Cerrar -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCerrar"
+        android:enabled="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_upload_white"
+        android:text="Guarda"
+        android:textColor="@color/white"
+        app:cornerRadius="8dp"
+        app:iconTint="@android:color/white"
+        app:backgroundTint="@android:color/darker_gray"
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>

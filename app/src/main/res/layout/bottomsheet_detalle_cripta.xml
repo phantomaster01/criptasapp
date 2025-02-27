@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="16dp">
+
+    <!-- Título -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtTituloCripta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Detalles de la Cripta"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="8dp"/>
+
+    <!-- Datos de la cripta -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtCripta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cripta: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtSeccion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sección: "
+        android:textSize="16sp"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtZona"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Zona: "
+        android:textSize="16sp"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtIglesia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Iglesia: "
+        android:textSize="16sp"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtUbicacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Precio: "
+        android:textSize="16sp"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtDisponibilidad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Disponible: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:paddingTop="8dp"
+        android:textColor="@android:color/holo_green_dark"/>
+
+    <!-- Botón Comprar -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnComprarCripta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Apartar Cripta"
+        android:layout_marginTop="16dp"
+        app:icon="@android:drawable/ic_menu_save"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+</LinearLayout>

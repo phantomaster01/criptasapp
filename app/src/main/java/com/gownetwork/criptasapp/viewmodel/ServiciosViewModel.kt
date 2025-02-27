@@ -35,7 +35,7 @@ class ServiciosViewModel(private val repository: ServiciosRepository, private va
     fun fetchServicioDetalle(idServicio: String) {
         viewModelScope.launch {
             try {
-                val response = repository.getServicioDetalle(idServicio, getToken())
+                val response = repository.getServicioDetalle(idServicio)
                 if (response.HttpCode == 200) {
                     _servicioDetalle.value = response.Result
                 } else {
@@ -51,7 +51,7 @@ class ServiciosViewModel(private val repository: ServiciosRepository, private va
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val response = repository.getServicios(idIglesia, getToken())
+                val response = repository.getServicios(idIglesia)
                 _servicios.value = response
                 _error.value = null
             } catch (e: Exception) {

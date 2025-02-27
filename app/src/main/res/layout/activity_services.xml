@@ -7,15 +7,22 @@
     android:layout_height="match_parent"
     tools:context="com.gownetwork.criptasapp.CriptasApp.activitys.ServiciosActivity">
 
-    <!-- Toolbar -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbarServicios"
+    <!-- Contenedor para Toolbar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/tool"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
-        android:title="Servicios"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:fitsSystemWindows="true"
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarServicios"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+            android:title="Servicios"/>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <!-- ProgressBar -->
     <ProgressBar
@@ -24,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/toolbarServicios"
+        app:layout_constraintTop_toBottomOf="@id/tool"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

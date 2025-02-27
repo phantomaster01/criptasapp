@@ -11,8 +11,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gownetwork.criptasapp.CriptasApp.adapters.CriptasByIglesiaAdapter
+import com.gownetwork.criptasapp.CriptasApp.bottomSheet.SolicitarApartarBottomSheet
 import com.gownetwork.criptasapp.CriptasApp.bottomSheet.SolicitudBottomSheet
 import com.gownetwork.criptasapp.CriptasApp.extensions.IdServicioCriptas
+import com.gownetwork.criptasapp.CriptasApp.extensions.setupFullScreen
 import com.gownetwork.criptasapp.network.ApiClient
 import com.gownetwork.criptasapp.network.Repository.CriptasRepository
 import com.gownetwork.criptasapp.network.entities.CriptasByIglesia
@@ -36,6 +38,7 @@ class CriptasDisponiblesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCriptasDisponiblesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupFullScreen(false)
         loadId()
         initView()
         initObservers()
@@ -112,13 +115,8 @@ class CriptasDisponiblesActivity : AppCompatActivity() {
         }
     }
     private fun onSolicitarClick(cripta: CriptasByIglesia) {
-        if(cripta.estatus){
-            val bottomSheet = SolicitudBottomSheet("Informes de la cripta ".plus(cripta?.cripta), IdServicioCriptas, "Información de criptas: ".plus(cripta.cripta))
-            bottomSheet.show(supportFragmentManager, bottomSheet.tag)
-        }else{
-            Toast.makeText(this, "Cripta no disponible", Toast.LENGTH_LONG).show()
-        }
-
+        val bottomSheet = SolicitarApartarBottomSheet(cripta)
+        bottomSheet.show(supportFragmentManager, bottomSheet.tag)
     }
 
 }

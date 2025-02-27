@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gownetwork.criptasapp.CriptasApp.adapters.ServiciosAdapter
 import com.gownetwork.criptasapp.CriptasApp.bottomSheet.ServicioBottomSheet
+import com.gownetwork.criptasapp.CriptasApp.extensions.setupFullScreen
 import com.gownetwork.criptasapp.network.ApiClient
 import com.gownetwork.criptasapp.network.Repository.CriptasRepository
 import com.gownetwork.criptasapp.network.Repository.ServiciosRepository
@@ -36,6 +37,7 @@ class ServiciosActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityServicesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupFullScreen(false)
         loadId()
         initView()
         initObservers()

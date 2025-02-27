@@ -3,6 +3,7 @@ package com.gownetwork.criptasapp.CriptasApp
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.WindowCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.gownetwork.criptasapp.CriptasApp.bottomSheet.ServicioBottomSheet
@@ -13,9 +14,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbarX)
         // Obtener el NavController desde el NavHostFragment
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
@@ -31,10 +33,10 @@ class MainActivity : AppCompatActivity() {
                     onVerMasClick(it)
                 }
             }
-
         }catch (ex:Exception){
             ex.printStackTrace()
         }
+        WindowCompat.setDecorFitsSystemWindows(window, true)
     }
 
     private fun onVerMasClick(idServicio: String) {

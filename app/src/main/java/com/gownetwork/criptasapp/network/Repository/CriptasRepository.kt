@@ -8,8 +8,8 @@ import com.gownetwork.criptasapp.network.entities.SolicitudInfo
 
 class CriptasRepository(private val apiService: ApiService) {
 
-    suspend fun getCriptasDisponibles(idIglesia: String, token: String?): List<CriptasByIglesia> {
-        val response = apiService.getCriptasDisponibles(idIglesia, token)
+    suspend fun getCriptasDisponibles(idIglesia: String): List<CriptasByIglesia> {
+        val response = apiService.getCriptasDisponibles(idIglesia)
         if(response.HasError){
             return emptyList()
         }else{
@@ -17,7 +17,7 @@ class CriptasRepository(private val apiService: ApiService) {
         }
     }
 
-    suspend fun getMisCriptas(idCliente: String, token: String?): List<MisCriptas> {
+    suspend fun getMisCriptas(idCliente: String?, token: String?): List<MisCriptas> {
         val response = apiService.getMisCriptas(idCliente, token)
         if(response.HasError){
             return emptyList()

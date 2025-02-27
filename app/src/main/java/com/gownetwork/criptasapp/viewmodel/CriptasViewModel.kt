@@ -33,23 +33,23 @@ class CriptasViewModel(private val repository: CriptasRepository, private val co
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> get() = _error
 
-    private fun getToken(): String? {
+    public fun getToken(): String? {
         val token = sharedPreferences.getString("auth_token", null)
         return "Bearer $token"
     }
 
-    private fun getId(): String {
+    public fun getId(): String? {
         sharedPreferences.getString("id", null)?.let {
             return it
         }
-        return ""
+        return null
     }
 
     fun fetchCriptasDisponibles(idIglesia: String) {
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val response = repository.getCriptasDisponibles(idIglesia, getToken())
+                val response = repository.getCriptasDisponibles(idIglesia)
                 _criptasDisponibles.value = response
                 _error.value = null
             } catch (e: Exception) {

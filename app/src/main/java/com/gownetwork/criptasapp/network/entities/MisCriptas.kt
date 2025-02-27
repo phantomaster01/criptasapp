@@ -8,6 +8,8 @@ data class MisCriptas(
     @SerializedName("Seccion") val seccion: String,
     @SerializedName("Zona") val zona: String,
     @SerializedName("Iglesia") val iglesia: String,
+    @SerializedName("Pagado") val pagado: Boolean,
+    @SerializedName("Precio") val precio: Double,
     @SerializedName("Lat") val latitud: String,
     @SerializedName("Long") val longitud: String,
     @SerializedName("Fallecidos") val fallecidos: Int,

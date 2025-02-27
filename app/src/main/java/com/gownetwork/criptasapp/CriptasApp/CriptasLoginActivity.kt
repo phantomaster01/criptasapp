@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.gownetwork.criptasapp.CriptasApp.bottomSheet.ServicioBottomSheet
+import com.gownetwork.criptasapp.CriptasApp.extensions.setupFullScreen
 import com.gownetwork.criptasapp.viewmodel.AuthViewModel
 import com.gownetwork.criptasapp.viewmodel.AuthViewModelFactory
 import mx.com.gownetwork.criptas.databinding.ActivityCriptasLoginBinding
@@ -25,7 +26,7 @@ class CriptasLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        supportActionBar?.hide()
+        setupFullScreen(true)
         binding = ActivityCriptasLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

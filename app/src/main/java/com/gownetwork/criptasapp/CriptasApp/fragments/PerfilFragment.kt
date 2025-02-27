@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.gownetwork.criptasapp.CriptasApp.CriptasLoginActivity
+import com.gownetwork.criptasapp.CriptasApp.extensions.navigateToLogin
+import com.gownetwork.criptasapp.CriptasApp.extensions.navigateToRegister
+import com.gownetwork.criptasapp.CriptasApp.extensions.setTitle
 import mx.com.gownetwork.criptas.databinding.FragmentMiPerfilBinding
 import com.gownetwork.criptasapp.network.entities.formatFecha
 import com.gownetwork.criptasapp.viewmodel.AuthViewModel
@@ -25,45 +28,61 @@ class PerfilFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMiPerfilBinding.inflate(inflater, container, false)
+        setTitle("Mi Perfil")
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Instanciar el ViewModel con Factory
         authViewModel = ViewModelProvider(this, AuthViewModelFactory(requireContext()))
             .get(AuthViewModel::class.java)
+        with(binding){
+            var gone = authViewModel.getToken() == null
+            layoutNoRegistrado.isGone = !gone
+            layoutRegistrado.isGone = gone
+            if(gone)
+                initViewsGo()
+            else
+                initViews()
+        }
 
+    }
+
+    private fun initViewsGo()=with(binding){
+        btnIniciarSesion.setOnClickListener{
+            requireActivity().navigateToLogin()
+        }
+        btnRegistrarse.setOnClickListener{
+            requireActivity().navigateToRegister()
+        }
+    }
+
+    private fun initViews()=with(binding){
         // Observar los datos del perfil
         authViewModel.userProfile.observe(viewLifecycleOwner) { user ->
-            with(binding){
-                txtNombre.text = "${user.Nombres} ${user.Apellidos}"
-                txtEmail.text = user.Email
-                txtTelefono.text = user.Telefono
-                txtDireccion.text = user.Direccion
-                txtFechaNac.text = user.FechaNac
-                txtEdad.text = user.Edad.toString()
-                txtSexo.text = user.Sexo
-                txtFechaRegistro.text = formatFecha(user.FechaRegistro)
-            }
+            txtNombre.text = "${user.Nombres} ${user.Apellidos}"
+            txtEmail.text = user.Email
+            txtTelefono.text = user.Telefono
+            txtDireccion.text = user.Direccion
+            txtFechaNac.text = user.FechaNac
+            txtEdad.text = user.Edad.toString()
+            txtSexo.text = user.Sexo
+            txtFechaRegistro.text = formatFecha(user.FechaRegistro)
         }
 
         authViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            with(binding){
-                if (isLoading) {
-                    progressIndicator.visibility = View.VISIBLE
-                    scroll.visibility = View.GONE
-                } else {
-                    progressIndicator.visibility = View.GONE
-                    scroll.visibility = View.VISIBLE
-                }
+            if (isLoading) {
+                progressIndicator.visibility = View.VISIBLE
+                scroll.visibility = View.GONE
+            } else {
+                progressIndicator.visibility = View.GONE
+                scroll.visibility = View.VISIBLE
             }
         }
 
         // Observar errores
         authViewModel.profileError.observe(viewLifecycleOwner) { errorMessage ->
-            binding.txtNombre.text = errorMessage
+            txtNombre.text = errorMessage
         }
 
         // Llamar a la API para obtener datos del perfil
@@ -72,9 +91,7 @@ class PerfilFragment : Fragment() {
         // Cerrar sesión
         binding.btnLogout.setOnClickListener {
             authViewModel.logout()
-            val intent = Intent(activity, CriptasLoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+            requireActivity().navigateToLogin()
         }
     }
 
