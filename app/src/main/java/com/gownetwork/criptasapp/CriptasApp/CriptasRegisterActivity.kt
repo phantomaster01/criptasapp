@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
+import com.gownetwork.criptasapp.CriptasApp.extensions.navigateToLogin
 import com.gownetwork.criptasapp.CriptasApp.extensions.setupFullScreen
 import com.gownetwork.criptasapp.viewmodel.AuthViewModel
 import com.gownetwork.criptasapp.viewmodel.AuthViewModelFactory
@@ -100,7 +101,7 @@ class CriptasRegisterActivity : AppCompatActivity() {
 
         authViewModel.registerSuccess.observe(this) { result ->
             if(result){
-                finish()
+                navigateToLogin()
             }
         }
 
@@ -138,7 +139,7 @@ class CriptasRegisterActivity : AppCompatActivity() {
 
         // Evento de botón para regresar al login
         binding.btnBackToLogin.setOnClickListener {
-            finish() // Cierra la actividad y regresa al login
+            navigateToLogin()
         }
     }
 }

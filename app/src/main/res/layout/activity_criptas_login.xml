@@ -122,6 +122,20 @@
             android:padding="8dp"
             android:fontFamily="sans-serif-medium"/>
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/btnInvitado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="O Continuar como invitado"
+            android:textSize="16sp"
+            android:textColor="@color/colorGris"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:padding="8dp"
+            android:fontFamily="sans-serif-medium"/>
+
 
     </LinearLayout>
 

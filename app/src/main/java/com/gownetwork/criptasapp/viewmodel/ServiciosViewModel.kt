@@ -32,6 +32,13 @@ class ServiciosViewModel(private val repository: ServiciosRepository, private va
         return "Bearer $token";
     }
 
+    public fun getId(): String? {
+        sharedPreferences.getString("id", null)?.let {
+            return it
+        }
+        return null
+    }
+
     fun fetchServicioDetalle(idServicio: String) {
         viewModelScope.launch {
             try {

@@ -49,9 +49,13 @@ class ServicioBottomSheet(private val idServicio: String) : BottomSheetDialogFra
     }
 
     private fun onSolicitarClick(servicio: Servicio) {
-        val bottomSheet = SolicitudBottomSheet("Informes del servicio ".plus(servicio.Nombre), servicio.Id, "Informes del servicio: ".plus(servicio.Nombre))
-        bottomSheet.show(requireActivity().supportFragmentManager, bottomSheet.tag)
-
+        if(viewModel.getId() == null){
+            val bottomSheet = SolicitarSessionBottomSheet()
+            bottomSheet.show(requireActivity().supportFragmentManager, bottomSheet.tag)
+        }else{
+            val bottomSheet = SolicitudBottomSheet("Informes del servicio ".plus(servicio.Nombre), servicio.Id, "Informes del servicio: ".plus(servicio.Nombre))
+            bottomSheet.show(requireActivity().supportFragmentManager, bottomSheet.tag)
+        }
     }
 
     private fun initViews()=with(binding){

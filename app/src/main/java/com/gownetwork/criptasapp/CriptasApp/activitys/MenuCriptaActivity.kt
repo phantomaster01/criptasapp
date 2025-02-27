@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gownetwork.criptasapp.CriptasApp.adapters.PagosAdapter
@@ -36,6 +37,9 @@ class MenuCriptaActivity : AppCompatActivity() {
         binding = ActivityMenuCriptaBinding.inflate(layoutInflater)
         pagosViewModel = PagosViewModel(PagosRepository(ApiClient.service), this)
         setContentView(binding.root)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.title = "Opciones"
         requestPermissions()
         setupFullScreen(false)
         loadId()
@@ -76,6 +80,22 @@ class MenuCriptaActivity : AppCompatActivity() {
         }
     }
 
+    private fun next(title: String){
+        supportActionBar?.title = title
+
+        binding.toolbarServicios.setNavigationOnClickListener {
+            back()
+        }
+    }
+    private fun back(){
+        if(binding.contenido.isGone){
+            mostrarPagos(false)
+            supportActionBar?.title = "Opciones"
+        }else{
+            finish()
+        }
+    }
+
     private fun setupListeners() {
         binding.btnPagos.setOnClickListener {
             toggleVistaPagos()
@@ -92,7 +112,8 @@ class MenuCriptaActivity : AppCompatActivity() {
             },
             onEliminarClick = { pago,position ->
                 AlertDialog.Builder(this)
-                    .setTitle("Eliminar Pago")
+                    .setCancelable(false)
+                    .setTitle("Eliminar p|ago")
                     .setMessage("¿Estás seguro de que deseas eliminar este pago?")
                     .setPositiveButton("Eliminar") { _, _ ->
                         // Aquí podrías agregar la lógica para eliminarlo en el backend si es necesario.
@@ -126,6 +147,7 @@ class MenuCriptaActivity : AppCompatActivity() {
         if (mostrar) {
             binding.contenido.visibility = View.GONE
             binding.adapterLoad.visibility = View.VISIBLE
+            next("Pagos pendientes")
         } else {
             binding.contenido.visibility = View.VISIBLE
             binding.adapterLoad.visibility = View.GONE

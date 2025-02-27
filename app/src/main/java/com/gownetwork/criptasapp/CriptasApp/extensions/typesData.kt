@@ -17,14 +17,28 @@ fun String.removeBase64Prefix(): String {
 fun String.toReadableDate(): String {
     return try {
         val formatoEntrada = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-        formatoEntrada.timeZone = TimeZone.getTimeZone("UTC") // Ajustar zona horaria
+        formatoEntrada.timeZone = TimeZone.getTimeZone("UTC")
 
         val formatoSalida = SimpleDateFormat("dd 'de' MMMM 'de' yyyy", Locale("es", "MX"))
 
         val fecha: Date? = formatoEntrada.parse(this)
-        fecha?.let { formatoSalida.format(it) } ?: this // Si hay error, retorna el original
+        fecha?.let { formatoSalida.format(it) } ?: this
     } catch (e: Exception) {
-        this // Retorna la fecha original si hay error
+        this
+    }
+}
+
+fun String.toReadableDateY(): String {
+    return try {
+        val formatoEntrada = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        formatoEntrada.timeZone = TimeZone.getTimeZone("UTC")
+
+        val formatoSalida = SimpleDateFormat("dd 'de' MMMM 'de' yyyy", Locale("es", "MX"))
+
+        val fecha: Date? = formatoEntrada.parse(this)
+        fecha?.let { formatoSalida.format(it) } ?: this
+    } catch (e: Exception) {
+        this
     }
 }
 

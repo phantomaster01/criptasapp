@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.gownetwork.criptasapp.CriptasApp.bottomSheet.ServicioBottomSheet
+import com.gownetwork.criptasapp.CriptasApp.extensions.navigateToMain
+import com.gownetwork.criptasapp.CriptasApp.extensions.navigateToRegister
 import com.gownetwork.criptasapp.CriptasApp.extensions.setupFullScreen
 import com.gownetwork.criptasapp.viewmodel.AuthViewModel
 import com.gownetwork.criptasapp.viewmodel.AuthViewModelFactory
@@ -44,7 +46,7 @@ class CriptasLoginActivity : AppCompatActivity() {
         // Observa el estado del login
         authViewModel.loginSuccess.observe(this) { success ->
             if (success) {
-                goToMainActivity()
+                navigateToMain()
             }
         }
 
@@ -70,8 +72,10 @@ class CriptasLoginActivity : AppCompatActivity() {
         }
 
         binding.btnRegister.setOnClickListener {
-            val intent = Intent(this, CriptasRegisterActivity::class.java)
-            startActivity(intent)
+            navigateToRegister()
+        }
+        binding.btnInvitado.setOnClickListener{
+            navigateToMain()
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -96,11 +100,5 @@ class CriptasLoginActivity : AppCompatActivity() {
     private fun onVerMasClick(idServicio: String) {
         val bottomSheet = ServicioBottomSheet(idServicio)
         bottomSheet.show(supportFragmentManager, bottomSheet.tag)
-    }
-
-    private fun goToMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 }

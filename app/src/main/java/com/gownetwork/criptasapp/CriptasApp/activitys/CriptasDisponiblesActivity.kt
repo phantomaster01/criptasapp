@@ -12,8 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gownetwork.criptasapp.CriptasApp.adapters.CriptasByIglesiaAdapter
 import com.gownetwork.criptasapp.CriptasApp.bottomSheet.SolicitarApartarBottomSheet
-import com.gownetwork.criptasapp.CriptasApp.bottomSheet.SolicitudBottomSheet
-import com.gownetwork.criptasapp.CriptasApp.extensions.IdServicioCriptas
+import com.gownetwork.criptasapp.CriptasApp.bottomSheet.SolicitarSessionBottomSheet
 import com.gownetwork.criptasapp.CriptasApp.extensions.setupFullScreen
 import com.gownetwork.criptasapp.network.ApiClient
 import com.gownetwork.criptasapp.network.Repository.CriptasRepository
@@ -85,9 +84,7 @@ class CriptasDisponiblesActivity : AppCompatActivity() {
             }
         }
 
-        idIglesia?.let {
-            viewModel.fetchCriptasDisponibles(it)
-        }
+        fetch()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -95,12 +92,16 @@ class CriptasDisponiblesActivity : AppCompatActivity() {
         return true
     }
 
+    private fun fetch(){
+        idIglesia?.let {
+            viewModel.fetchCriptasDisponibles(it)
+        }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_refresh -> {
-                idIglesia?.let {
-                    viewModel.fetchCriptasDisponibles(it)
-                }
+                fetch()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -115,8 +116,15 @@ class CriptasDisponiblesActivity : AppCompatActivity() {
         }
     }
     private fun onSolicitarClick(cripta: CriptasByIglesia) {
-        val bottomSheet = SolicitarApartarBottomSheet(cripta)
-        bottomSheet.show(supportFragmentManager, bottomSheet.tag)
+        if(!cripta.estatus){
+            Toast.makeText(this,"Cripta no disponible", Toast.LENGTH_LONG).show()
+        }else if(viewModel.getId()==null){
+            val bottomSheet = SolicitarSessionBottomSheet()
+            bottomSheet.show(supportFragmentManager, bottomSheet.tag)
+        }else{
+            val bottomSheet = SolicitarApartarBottomSheet(cripta,::fetch)
+            bottomSheet.show(supportFragmentManager, bottomSheet.tag)
+        }
     }
 
 }

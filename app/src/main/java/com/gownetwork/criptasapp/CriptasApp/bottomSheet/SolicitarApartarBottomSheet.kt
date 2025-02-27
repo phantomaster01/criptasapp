@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.gownetwork.criptasapp.network.entities.CriptasByIglesia
 import mx.com.gownetwork.criptas.databinding.BottomsheetSolicitarApartarBinding
 
-class SolicitarApartarBottomSheet(private val cripta: CriptasByIglesia) : BottomSheetDialogFragment() {
+class SolicitarApartarBottomSheet(private val cripta: CriptasByIglesia, private val fetch: () -> Unit) : BottomSheetDialogFragment() {
 
     private var _binding: BottomsheetSolicitarApartarBinding? = null
     private val binding get() = _binding!!
@@ -34,7 +33,7 @@ class SolicitarApartarBottomSheet(private val cripta: CriptasByIglesia) : Bottom
 
         binding.btnApartarCripta.setOnClickListener {
             dismiss()
-            val detalleBottomSheet = CriptaDetalleBottomSheet(cripta)
+            val detalleBottomSheet = CriptaDetalleBottomSheet(cripta,::fetch)
             detalleBottomSheet.show(parentFragmentManager, detalleBottomSheet.tag)
         }
     }
