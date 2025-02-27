@@ -1,6 +1,8 @@
 package com.gownetwork.criptasapp.network
 
 import com.gownetwork.criptasapp.network.entities.CriptasByIglesia
+import com.gownetwork.criptasapp.network.entities.Evidencia
+import com.gownetwork.criptasapp.network.entities.EvidenciaCreate
 import com.gownetwork.criptasapp.network.entities.Iglesia
 import com.gownetwork.criptasapp.network.entities.MisCriptas
 import com.gownetwork.criptasapp.network.entities.Pago
@@ -107,6 +109,12 @@ interface ApiService {
         @Header("Authorization") token: String?
     ): Response<List<MisCriptas>>
 
+    @GET("/api/Clientes/MisCripta/{id}")
+    suspend fun getMisCripta(
+        @Path("id") idCripta: String?,
+        @Header("Authorization") token: String?
+    ): Response<MisCriptas>
+
     @POST("/api/SolicitudesInfo/Create")
     suspend fun crearSolicitud(
         @Header("Authorization") token: String?,
@@ -119,12 +127,18 @@ interface ApiService {
         @Body solicitud: PagoCreate
     ): Response<Pago>
 
-    @GET("/api/Pagos/Cliente/{id}")
+    @GET("/api/Pagos/Cliente/{id}/{IdCripta}")
     suspend fun pagosCliente(
         @Path("id") idCliente: String?,
+        @Path("IdCripta") idCripta: String?,
         @Header("Authorization") token: String?
     ): Response<List<Pago>>
 
+    @POST("/api/Pagos/Evidencia/Create")
+    suspend fun crearEvidenciaPago(
+        @Header("Authorization") token: String?,
+        @Body solicitud: EvidenciaCreate
+    ): Response<Evidencia>
 }
 
 object ApiClient {

@@ -26,6 +26,10 @@ class CriptasRepository(private val apiService: ApiService) {
         }
     }
 
+    suspend fun getMisCripta(idCripta: String?, token: String?): Response<MisCriptas> {
+        return apiService.getMisCripta(idCripta, token)
+    }
+
     suspend fun enviarSolicitud(token: String?, solicitud: SolicitudInfo): Response<SolicitudInfo> {
         val response = apiService.crearSolicitud(token, solicitud)
         return response

@@ -23,6 +23,9 @@ class CriptasViewModel(private val repository: CriptasRepository, private val co
     private val _misCriptas = MutableLiveData<List<MisCriptas>>()
     val misCriptas: LiveData<List<MisCriptas>> get() = _misCriptas
 
+    private val _misCripta = MutableLiveData<MisCriptas>()
+    val misCripta: LiveData<MisCriptas> get() = _misCripta
+
     private val _solicitudEnviada = MutableLiveData<Boolean>()
     val solicitudEnviada: LiveData<Boolean> get() = _solicitudEnviada
 
@@ -74,6 +77,25 @@ class CriptasViewModel(private val repository: CriptasRepository, private val co
             }
         }
     }
+    fun fetchMisCripta(idCripta : String) {
+        _isLoading.value = true
+        viewModelScope.launch {
+            try {
+                val response = repository.getMisCripta(idCripta, getToken())
+                if(response.HasError){
+                    _misCripta.value = response.Result
+                    _error.value = null
+                }else{
+                    _error.value = response.Message
+                }
+            } catch (e: Exception) {
+                _error.value = "Error al cargar mis criptas"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
     fun enviarSolicitud(idServicio: String, mensaje: String) {
         viewModelScope.launch {
             try {

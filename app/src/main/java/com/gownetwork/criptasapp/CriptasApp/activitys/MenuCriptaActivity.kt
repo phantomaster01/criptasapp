@@ -18,8 +18,11 @@ import com.gownetwork.criptasapp.CriptasApp.adapters.PagosAdapter
 import com.gownetwork.criptasapp.CriptasApp.bottomSheet.EvidenciaPagoBottomSheet
 import com.gownetwork.criptasapp.CriptasApp.extensions.setupFullScreen
 import com.gownetwork.criptasapp.network.ApiClient
+import com.gownetwork.criptasapp.network.Repository.CriptasRepository
 import com.gownetwork.criptasapp.network.Repository.PagosRepository
+import com.gownetwork.criptasapp.network.entities.MisCriptas
 import com.gownetwork.criptasapp.network.entities.Pago
+import com.gownetwork.criptasapp.viewmodel.CriptasViewModel
 import com.gownetwork.criptasapp.viewmodel.PagosViewModel
 import mx.com.gownetwork.criptas.databinding.ActivityMenuCriptaBinding
 
@@ -28,14 +31,17 @@ class MenuCriptaActivity : AppCompatActivity() {
     lateinit var binding: ActivityMenuCriptaBinding
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var pagosViewModel: PagosViewModel
+    private lateinit var criptasViewModel: CriptasViewModel
     private lateinit var pagosAdapter: PagosAdapter
     private var IdCripta: String? = null
+    private var cripta : MisCriptas? = null
     private var mostrandoPagos = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMenuCriptaBinding.inflate(layoutInflater)
         pagosViewModel = PagosViewModel(PagosRepository(ApiClient.service), this)
+        criptasViewModel = CriptasViewModel(CriptasRepository(ApiClient.service), this)
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
@@ -76,6 +82,24 @@ class MenuCriptaActivity : AppCompatActivity() {
             if (!error.isNullOrEmpty()) {
                 Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
                 mostrarPagos(false)
+            }
+        }
+
+        criptasViewModel.misCripta.observe(this) { item ->
+            binding.progressBar.visibility = View.GONE
+            if (item != null) {
+                cripta = item
+                supportActionBar?.title = cripta?.cripta
+            }
+        }
+
+        criptasViewModel.isLoading.observe(this){
+            binding.progressBar.isGone = !it
+        }
+
+        criptasViewModel.error.observe(this) { error ->
+            if (!error.isNullOrEmpty()) {
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -138,7 +162,9 @@ class MenuCriptaActivity : AppCompatActivity() {
             mostrarPagos(false)
         } else {
             binding.progressBar.visibility = View.VISIBLE
-            pagosViewModel.obtenerPagosCliente()
+            IdCripta?.let{ id ->
+                pagosViewModel.obtenerPagosCliente(id)
+            }
         }
     }
 

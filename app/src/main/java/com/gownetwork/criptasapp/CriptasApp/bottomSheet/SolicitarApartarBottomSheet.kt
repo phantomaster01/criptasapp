@@ -33,7 +33,7 @@ class SolicitarApartarBottomSheet(private val cripta: CriptasByIglesia, private 
 
         binding.btnApartarCripta.setOnClickListener {
             dismiss()
-            val detalleBottomSheet = CriptaDetalleBottomSheet(cripta,::fetch)
+            val detalleBottomSheet = CriptaDetalleBottomSheet(cripta,fetch)
             detalleBottomSheet.show(parentFragmentManager, detalleBottomSheet.tag)
         }
     }

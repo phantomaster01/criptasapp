@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gownetwork.criptasapp.network.Repository.PagosRepository
 import com.gownetwork.criptasapp.network.Response
+import com.gownetwork.criptasapp.network.entities.Evidencia
+import com.gownetwork.criptasapp.network.entities.EvidenciaCreate
 import com.gownetwork.criptasapp.network.entities.Pago
 import com.gownetwork.criptasapp.network.entities.PagoCreate
 import kotlinx.coroutines.launch
@@ -19,6 +21,9 @@ class PagosViewModel(private val repository: PagosRepository, private val contex
 
     private val _pago = MutableLiveData<Pago?>()
     val pago: LiveData<Pago?> get() = _pago
+
+    private val _evidencia = MutableLiveData<Evidencia?>()
+    val evidencia: LiveData<Evidencia?> get() = _evidencia
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
@@ -64,13 +69,36 @@ class PagosViewModel(private val repository: PagosRepository, private val contex
         }
     }
 
-    fun obtenerPagosCliente() {
+    fun subirEvidencia(create: EvidenciaCreate) {
+        _isLoading.value = true
+        viewModelScope.launch {
+            try {
+                val token = getToken()
+                val response: Response<Evidencia> = repository.setEvidenciaPago(create, token)
+
+                if (!response.HasError) {
+                    _evidencia.value = response.Result
+                    _error.value = null
+                } else {
+                    _error.value = "Error en el pago: ${response.Message}"
+                    _evidencia.value = null
+                }
+            } catch (e: Exception) {
+                _error.value = "Error al procesar el pago"
+                _evidencia.value = null
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun obtenerPagosCliente(idCripta:String) {
         _isLoading.value = true
         viewModelScope.launch {
             try {
                 val id = getId()
                 val token = getToken()
-                val pagosList = repository.setPago(id, token)
+                val pagosList = repository.getPagos(id, idCripta, token)
 
                 _pagos.value = pagosList
                 _error.value = if (pagosList.isEmpty()) "No hay pagos disponibles" else null

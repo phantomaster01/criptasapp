@@ -12,10 +12,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isGone
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.gownetwork.criptasapp.CriptasApp.extensions.toBase64Async
 import com.gownetwork.criptasapp.CriptasApp.extensions.toPesos
+import com.gownetwork.criptasapp.network.ApiClient
+import com.gownetwork.criptasapp.network.Repository.PagosRepository
+import com.gownetwork.criptasapp.network.entities.EvidenciaCreate
 import com.gownetwork.criptasapp.network.entities.Pago
+import com.gownetwork.criptasapp.viewmodel.PagosViewModel
 import mx.com.gownetwork.criptas.databinding.BottomsheetEvidenciaPagoBinding
 import java.util.concurrent.Executors
 
@@ -26,6 +31,8 @@ class EvidenciaPagoBottomSheet(private val pago: Pago) : BottomSheetDialogFragme
 
     private lateinit var pickImageLauncher: ActivityResultLauncher<Intent>
     private lateinit var takePhotoLauncher: ActivityResultLauncher<Intent>
+    private lateinit var pagosViewModel: PagosViewModel
+    private var base64 : String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = BottomsheetEvidenciaPagoBinding.inflate(inflater, container, false)
@@ -34,6 +41,7 @@ class EvidenciaPagoBottomSheet(private val pago: Pago) : BottomSheetDialogFragme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        pagosViewModel = PagosViewModel(PagosRepository(ApiClient.service), requireContext())
         binding.txtPagoInfo.text = "Evidencia de Pago: ${pago.MontoTotal?.toPesos()}"
         // Configurar los launchers para tomar foto o seleccionar imagen
         pickImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -43,6 +51,7 @@ class EvidenciaPagoBottomSheet(private val pago: Pago) : BottomSheetDialogFragme
                     binding.imgPreview.setImageURI(it)
                     convertirUriABitmap(it) { bitmap ->
                         convertirBitmapBase64(bitmap)
+                        binding.btnCerrar.isEnabled = true
                     }
                 }
             }
@@ -54,13 +63,49 @@ class EvidenciaPagoBottomSheet(private val pago: Pago) : BottomSheetDialogFragme
                 imageBitmap?.let {
                     binding.imgPreview.setImageBitmap(it)
                     convertirBitmapBase64(it)
+                    binding.btnCerrar.isEnabled = true
                 }
             }
         }
 
         binding.btnSubirFoto.setOnClickListener { seleccionarFoto() }
         binding.btnTomarFoto.setOnClickListener { tomarFoto() }
-        binding.btnCerrar.setOnClickListener { dismiss() }
+        binding.btnCerrar.setOnClickListener {
+            if(base64==null){
+                Toast.makeText(requireContext(),"Agrega Imagen", Toast.LENGTH_SHORT).show()
+            }else{
+                val create = EvidenciaCreate(
+                    IdPago = pago.Id,
+                    Evidencia = base64
+                )
+                pagosViewModel.subirEvidencia(
+                    create
+                )
+            }
+
+        }
+        initObservers()
+    }
+
+    private fun initObservers(){
+        pagosViewModel.evidencia.observe(this) { item ->
+            if (item != null) {
+                dismiss()
+            }
+        }
+
+        pagosViewModel.isLoading.observe(this){
+            binding.progressIndicator.isGone = !it
+            binding.btnSubirFoto.isGone = it
+            binding.btnTomarFoto.isGone = it
+            binding.btnCerrar.isGone = it
+        }
+
+        pagosViewModel.error.observe(this) { error ->
+            if (!error.isNullOrEmpty()) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun convertirUriABitmap(uri: Uri, callback: (Bitmap) -> Unit) {
@@ -82,6 +127,7 @@ class EvidenciaPagoBottomSheet(private val pago: Pago) : BottomSheetDialogFragme
 
     private fun convertirBitmapBase64(bitmap: Bitmap) {
         bitmap.toBase64Async { base64String ->
+            base64 = base64String
             requireActivity().runOnUiThread {
                 Toast.makeText(requireContext(), "Imagen convertida a Base64", Toast.LENGTH_SHORT).show()
                 // Aquí puedes enviar el base64 al servidor o guardarlo en tu base de datos.
