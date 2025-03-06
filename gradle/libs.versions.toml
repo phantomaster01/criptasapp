@@ -24,6 +24,8 @@ mapsVersion = "3.1.0-beta"
 firebasev = "4.4.2"
 firebasePv = "33.9.0"
 firebaseMessaging = "23.2.1"
+viewpager2 = "1.0.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -51,6 +53,8 @@ volley = { group = "com.android.volley", name = "volley", version.ref = "volley"
 maps = { group = "com.google.android.libraries.maps", name = "maps", version.ref = "mapsVersion" }
 services-firebase = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebasePv" }
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
+androidx-viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

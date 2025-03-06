@@ -106,6 +106,12 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name="com.gownetwork.criptasapp.CriptasApp.activitys.OnBoardingActivity"
+            android:theme="@style/Theme.CriptasAppBar"
+            android:exported="true">
+        </activity>
+
 
     </application>
 

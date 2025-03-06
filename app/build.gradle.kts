@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.services.location)
     implementation(libs.services.firebase)
     implementation(libs.firebase.messaging)
+    implementation(libs.androidx.viewpager2)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

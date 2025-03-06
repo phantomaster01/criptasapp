@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.gownetwork.criptasapp.CriptasApp.CriptasLoginActivity
 import com.gownetwork.criptasapp.CriptasApp.MainActivity
+import com.gownetwork.criptasapp.CriptasApp.extensions.navigateToOnBoarding
 import com.gownetwork.criptasapp.CriptasApp.extensions.setupFullScreen
 import com.gownetwork.criptasapp.network.ApiClient
 import com.gownetwork.criptasapp.viewmodel.AuthViewModel
@@ -46,7 +47,7 @@ class CriptasAppActivity : AppCompatActivity() {
 
         if (token.isNullOrEmpty() || userId.isNullOrEmpty()) {
             // Si no hay credenciales, enviar a Login
-            navigateToMain()
+            navigateToOnBoarding(idServicio)
         } else {
             // Si hay credenciales, validar el token con el servidor
             validarToken(userId, token)
@@ -60,7 +61,7 @@ class CriptasAppActivity : AppCompatActivity() {
                     val response = ApiClient.service.getUserProfile(userId, "Bearer $token")
 
                     if (response.HttpCode == 200) {
-                        navigateToMain()
+                        navigateToOnBoarding(idServicio)
                     } else {
                         handleInvalidToken()
                     }
@@ -75,17 +76,9 @@ class CriptasAppActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun navigateToMain() {
-        val intent = Intent(this, MainActivity::class.java)
-        idServicio?.let { intent.putExtra("ID_SERVICIO", it) }
-        startActivity(intent)
-        finish() // Cierra esta actividad para evitar que el usuario regrese aquí
-    }
-
     private fun handleInvalidToken() {
         // Eliminar token e ID almacenado
         authViewModel.logout()
-        navigateToMain()
+        navigateToOnBoarding(idServicio)
     }
 }
