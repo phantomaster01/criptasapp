@@ -16,25 +16,22 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
-
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_margin="10dp"
+            android:layout_width="330dp"
+            android:layout_height="350dp"
+            android:layout_margin="50dp"
             android:src="@drawable/logo6" />
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBotton="20dp"
-            android:text="Bienvenidos a criptas"
+            android:text="Gracias por su prefrencia "
             android:textColor="@color/black_light"
-            android:textSize="35sp"
+            android:textSize="30dp"
             android:textStyle="bold"
             android:textcolor="@color/colorprimary" />
 
@@ -43,22 +40,11 @@
             android:layout_height="wrap_content"
             android:layout_marginBotton="30dp"
             android:textAlignment="center"
-            android:text="Facilitamos la administración de tu cripta y la memoria de tus seres queridos, todo en un solo lugar."
+            android:text="“Porque cada evento es una huella en el tiempo.”"
             android:textColor="@color/black_light"
-            android:textSize="15dp"
+            android:textSize="20dp"
             android:textStyle="bold"
             android:textcolor="@color/colorprimary" />
-
-
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="261dp"
-        android:layout_height="394dp"
-        android:layout_margin="0dp"
-        android:src="@drawable/onboarding1"
-        app:layout_constraintBottom_toBottomOf="@+id/lContent"
-        app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

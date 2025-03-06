@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/apk/tools"
+    xmlns:tools2="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <LinearLayout
+        android:id="@+id/lContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="30dp"
+            android:text="No pierdas fechas importantes"
+            android:textAlignment="center"
+            android:textColor="@color/black_light"
+            android:textSize="28dp"
+            android:textStyle="bold"
+            android:textcolor="@color/colorprimary" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:text="Recibe avisos cuando tu cripta necesite renovación."
+            android:textColor="@color/black_light"
+            android:textSize="23dp"
+            android:textStyle="bold"
+            android:textcolor="@color/colorprimary" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:text="Solicita recordatorios para arreglos y mantenimiento."
+            android:textColor="@color/black_light"
+            android:textSize="23dp"
+            android:textStyle="bold"
+            android:textcolor="@color/colorprimary" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:text="Mantente informado sin salir de casa."
+            android:textColor="@color/black_light"
+            android:textSize="23dp"
+            android:textStyle="bold"
+            android:textcolor="@color/colorprimary" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="204dp"
+        android:layout_height="348dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/onboarding3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintbotton_toBottomof="@id/lContent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
