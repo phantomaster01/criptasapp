@@ -12,6 +12,7 @@ data class Pago (
     var FechaRegistro: String?,
     var FechaActualizacion: String?,
     var Estatus: Boolean?,
+    var EstatusSolicitud: Boolean?,
     var MontoPagado: Double?,
     var FechaPagado: String?,
 )

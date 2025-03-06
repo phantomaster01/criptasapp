@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.gownetwork.criptasapp.CriptasApp.CriptasLoginActivity
+import com.gownetwork.criptasapp.CriptasApp.CriptasRegisterActivity
 import com.gownetwork.criptasapp.CriptasApp.MainActivity
 
 fun AppCompatActivity.setupFullScreen(isHide: Boolean) {
@@ -23,7 +24,7 @@ fun AppCompatActivity.setupFullScreen(isHide: Boolean) {
 }
 
 fun Activity.navigateToRegister() {
-    val intent = Intent(this, CriptasLoginActivity::class.java)
+    val intent = Intent(this, CriptasRegisterActivity::class.java)
     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     startActivity(intent)
     finish()

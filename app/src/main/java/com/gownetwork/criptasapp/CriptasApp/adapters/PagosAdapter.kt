@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.gownetwork.criptasapp.CriptasApp.extensions.toPesos
@@ -15,6 +16,7 @@ import mx.com.gownetwork.criptas.databinding.ItemPagoBinding
 import com.gownetwork.criptasapp.network.entities.Pago
 import mx.com.gownetwork.criptas.R
 
+@Suppress("DEPRECATION")
 class PagosAdapter(
     private var pagos: MutableList<Pago>,
     private val onPagoClick: (Pago,Int) -> Unit,
@@ -22,9 +24,33 @@ class PagosAdapter(
 ) : RecyclerView.Adapter<PagosAdapter.PagoViewHolder>() {
 
     inner class PagoViewHolder(private val binding: ItemPagoBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(pago: Pago) {
-            binding.txtMonto.text = "Monto: ${pago.MontoTotal?.toPesos()}"
-            binding.txtFecha.text = "Fecha: ${pago.FechaLimite?.toReadableDate()}"
+        fun bind(pago: Pago)=with(binding) {
+            if(pago.Pagado==true){
+                txtMonto.text = "Monto: ${pago.MontoTotal?.toPesos()}"
+                txtFecha.text = "Fecha: ${pago.FechaPagado?.toReadableDate()}"
+                txtEstatus.isGone = false
+                txtEstatus.text = "Pagado"
+                val color = txtFecha.context.resources.getColor(android.R.color.holo_green_light)
+                txtEstatus.setBackgroundColor(color)
+            }else{
+                txtMonto.text = "Monto: ${pago.MontoTotal?.toPesos()}"
+                txtFecha.text = "Fecha: ${pago.FechaLimite?.toReadableDate()}"
+                if(pago.Estatus==true){
+                    txtEstatus.isGone = false
+                    txtEstatus.text = "Evidencia enviada"
+                    val color = txtFecha.context.resources.getColor(android.R.color.holo_blue_light)
+                    txtEstatus.setBackgroundColor(color)
+                }else if(pago.EstatusSolicitud==false){
+                    txtEstatus.isGone = false
+                    txtEstatus.text = "Evidencia rechazada"
+                    val color = txtFecha.context.resources.getColor(android.R.color.holo_red_light)
+                    txtEstatus.setBackgroundColor(color)
+                }else{
+                    txtEstatus.isGone = true
+                }
+
+            }
+
         }
     }
 
@@ -45,7 +71,7 @@ class PagosAdapter(
         notifyDataSetChanged()
     }
 
-    fun getSwipeHandler(context: Context): ItemTouchHelper {
+    fun getSwipeHandler(context: Context): ItemTouchHelper? {
         return ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             private val iconPagar: Drawable = context.getDrawable(R.drawable.ic_upload_white)!!
             private val iconEliminar: Drawable = context.getDrawable(R.drawable.ic_delete_white)!!

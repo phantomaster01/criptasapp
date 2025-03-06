@@ -130,8 +130,14 @@ class MenuCriptaActivity : AppCompatActivity() {
         pagosAdapter = PagosAdapter(
             mutableListOf(),
             onPagoClick = { pago,position ->
-                val bottomSheet = EvidenciaPagoBottomSheet(pago)
-                bottomSheet.show(supportFragmentManager, bottomSheet.tag)
+                if(pago.Pagado==true){
+                    Toast.makeText(this, "Pago ya aplicado", Toast.LENGTH_LONG).show()
+                }else if(pago.Estatus==true){
+                    Toast.makeText(this, "Evidencia enviada, en espera", Toast.LENGTH_LONG).show()
+                }else{
+                    val bottomSheet = EvidenciaPagoBottomSheet(pago)
+                    bottomSheet.show(supportFragmentManager, bottomSheet.tag)
+                }
                 pagosAdapter.notifyItemChanged(position)
             },
             onEliminarClick = { pago,position ->
@@ -154,7 +160,7 @@ class MenuCriptaActivity : AppCompatActivity() {
         binding.recyclerPagos.layoutManager = LinearLayoutManager(applicationContext)
         binding.recyclerPagos.adapter = pagosAdapter
         val itemTouchHelper = pagosAdapter.getSwipeHandler(this)
-        itemTouchHelper.attachToRecyclerView(binding.recyclerPagos)
+        itemTouchHelper?.attachToRecyclerView(binding.recyclerPagos)
     }
 
     private fun toggleVistaPagos() {
