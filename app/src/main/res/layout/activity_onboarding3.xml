@@ -27,8 +27,7 @@
             android:textAlignment="center"
             android:textColor="@color/black_light"
             android:textSize="28dp"
-            android:textStyle="bold"
-            android:textcolor="@color/colorprimary" />
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
@@ -37,8 +36,7 @@
             android:text="Recibe avisos cuando tu cripta necesite renovación."
             android:textColor="@color/black_light"
             android:textSize="23dp"
-            android:textStyle="bold"
-            android:textcolor="@color/colorprimary" />
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
@@ -47,8 +45,7 @@
             android:text="Solicita recordatorios para arreglos y mantenimiento."
             android:textColor="@color/black_light"
             android:textSize="23dp"
-            android:textStyle="bold"
-            android:textcolor="@color/colorprimary" />
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
@@ -57,8 +54,7 @@
             android:text="Mantente informado sin salir de casa."
             android:textColor="@color/black_light"
             android:textSize="23dp"
-            android:textStyle="bold"
-            android:textcolor="@color/colorprimary" />
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <ImageView
@@ -67,8 +63,7 @@
         android:layout_marginEnd="10dp"
         android:src="@drawable/onboarding3"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintbotton_toBottomof="@id/lContent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

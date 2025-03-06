@@ -29,8 +29,7 @@
             android:textAlignment="center"
             android:textColor="@color/black_light"
             android:textSize="28dp"
-            android:textStyle="bold"
-            android:textcolor="@color/colorprimary" />
+            android:textStyle="bold" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_margin="25dp"
@@ -54,7 +53,6 @@
                 android:textColor="@color/black_light"
                 android:textSize="23sp"
                 android:textStyle="bold"
-                android:textcolor="@color/colorprimary"
                 app:layout_constraintStart_toEndOf="@+id/ic_check1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -71,8 +69,7 @@
             android:text="✅ Realiza renovaciones de anualidades en línea"
             android:textColor="@color/black_light"
             android:textSize="23dp"
-            android:textStyle="bold"
-            android:textcolor="@color/colorprimary" />
+            android:textStyle="bold" />
 
         <TextView
         android:layout_width="match_parent"
@@ -82,8 +79,7 @@
         android:text="✅ Solicita mantenimiento o arreglos florales sin ir a la iglesia."
         android:textColor="@color/black_light"
         android:textSize="23dp"
-        android:textStyle="bold"
-        android:textcolor="@color/colorprimary" />
+        android:textStyle="bold" />
 
 
     </LinearLayout>
@@ -95,7 +91,6 @@
         android:layout_marginBottom="0dp"
         android:src="@drawable/onboarding2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintbotton_toBottomof="@id/lContent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
